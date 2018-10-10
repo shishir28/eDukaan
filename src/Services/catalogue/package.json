@@ -1,5 +1,5 @@
 {
-  "name": "catalogue microservice",
+  "name": "catalogue",
   "version": "1.0.0",
   "description": "catalogue micro service",
   "main": "index.js",
