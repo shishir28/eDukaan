@@ -1,2 +1,2 @@
 # eDukaan
-E-Commerce Application with limited capabilities. Not for production use.
+Placeholder for E-Commerce Application with limited capabilities. Not for production use.
