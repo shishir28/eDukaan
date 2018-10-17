@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+ sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+
+ apigatewaybase.ms:
+    image: edukaan/apigatewaybase.ms:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/ApiGateways/Monad.Service.ApiGatewayBase/Dockerfile    
+    depends_on:
+      - sql.data    
+
+ identity.ms:
+    image: edukaan/identity.ms:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Dockerfile    
+    depends_on:
+      - sql.data  

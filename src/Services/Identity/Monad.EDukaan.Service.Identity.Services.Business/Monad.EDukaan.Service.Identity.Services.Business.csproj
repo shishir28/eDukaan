@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\DotNet\Framework\Common\Monad.EDukaan.Framework.Common.csproj"/>
+      <ProjectReference Include="..\..\..\BuildingBlocks\DotNet\Framework\Persistence\Monad.EDukaan.Framework.Persistence.csproj"/>   
+      <ProjectReference Include="..\Monad.EDukaan.Service.Identity.Domain.Entities\Monad.EDukaan.Service.Identity.Domain.Entities.csproj" />
+      <ProjectReference Include="..\Monad.EDukaan.Service.Identity.Domain.Interfaces\Monad.EDukaan.Service.Identity.Domain.Interfaces.csproj" />
+      <ProjectReference Include="..\Monad.EDukaan.Service.Identity.Services.Interfaces\Monad.EDukaan.Service.Identity.Services.Interfaces.csproj" />
+  </ItemGroup>
+</Project>
