@@ -40,7 +40,7 @@ namespace Monad.EDukaan.Service.Identity.Web.Api
                      builder.AddDebug();
                  })
                  .UseApplicationInsights()
-                 .UseUrls("http://*:9001")
+                //  .UseUrls("http://*:9001")
                  .Build();
     }
 }
