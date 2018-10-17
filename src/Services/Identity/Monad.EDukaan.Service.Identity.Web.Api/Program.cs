@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Monad.EDukaan.Service.Identity.Web.Api.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Monad.EDukaan.Framework.Common;
+using Monad.EDukaan.Framework.WebHost;
 using Monad.EDukaan.Service.Identity.Infrastructure.Data;
 using System.IO;
 using System;
-using Monad.EDukaan.Framework.WebHost;
-
 namespace Monad.EDukaan.Service.Identity.Web.Api
 {
     public class Program
@@ -19,12 +19,9 @@ namespace Monad.EDukaan.Service.Identity.Web.Api
             BuildWebHost(args)
              .MigrateDbContext<ApplicationDBContext>((context, services) =>
                {
-                   var env = services.GetService<IHostingEnvironment>();
-                //    var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
-                //    var settings = services.GetService<IOptions<AppSettings>>();
-                //    new ApplicationDbContextSeed()
-                //        .SeedAsync(context, env, logger, settings)
-                //        .Wait();
+                   new ApplicationDbContextSeed()
+                       .SeedAsync(context, services)
+                       .Wait();
                })
                .Run();
         }

@@ -8,7 +8,7 @@ using Monad.EDukaan.Service.Identity.Infrastructure.Data;
 using Monad.EDukaan.Service.Identity.Infrastructure.Data;
 using Monad.EDukaan.Service.Identity.Services.Business;
 using Monad.EDukaan.Service.Identity.Services.Interfaces;
-using Monad.EDukaanService.Identity.Domain.Interfaces;
+using Monad.EDukaan.Service.Identity.Domain.Interfaces;
 
 namespace Monad.EDukaan.Service.Identity.Web.Api
 {

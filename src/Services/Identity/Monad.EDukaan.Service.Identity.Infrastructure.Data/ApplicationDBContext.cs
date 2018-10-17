@@ -7,7 +7,7 @@ using System;
 
 namespace Monad.EDukaan.Service.Identity.Infrastructure.Data
 {
-   public class ApplicationDBContext : DbContext
+   public class ApplicationDBContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -39,12 +39,14 @@ namespace Monad.EDukaan.Service.Identity.Infrastructure.Data
 
             modelBuilder.Entity<ApplicationRole>(b =>
             {
+                b.ToTable("ApplicationRole");
                 b.HasKey(uc => uc.Id);
             });
 
             modelBuilder.Entity<ApplicationUser>(b =>
             {
-                b.HasKey(uc => uc.Id);
+                b.ToTable("ApplicationUser");
+                b.HasKey(u => u.Id);                
             });
 
             modelBuilder.Entity<IdentityUserClaim<string>>(b =>

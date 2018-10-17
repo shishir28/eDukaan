@@ -2,9 +2,11 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Monad.Service.Identity.Infrastructure.Data;
 
-namespace Monad.EDukaan.Service.Identity.Web.Api
+using Monad.EDukaan.Service.Identity.Infrastructure.Data;
+
+
+namespace Monad.EDukaan.Service.Identity.Web.Api.Data
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDBContext>
     {

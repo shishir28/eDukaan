@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Monad.EDukaan.Service.Identity.Services.Business
 {
-    public class LoginService:ILoginService<ApplicationUser>
+    public class LoginService:ILoginService
     {
         private  UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
