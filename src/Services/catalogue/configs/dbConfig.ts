@@ -1,4 +1,6 @@
-import { DBConfiguration } from "../../../BuildingBlocks/nodejs/configs/dbConfiguration";
+import {  DBConfiguration} from "eDukaanFramework"; 
+
+
 import * as path from "path";
 
 const modalDir = path.join(path.resolve(__dirname, '../domain'));

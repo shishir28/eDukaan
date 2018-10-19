@@ -2,6 +2,8 @@ import * as express from "express";
 import { ProductRepository } from '../persistence/product.repository';
 import { Product } from "../domain/Product";
 import { logger } from '../infrastructure/logger';
+import { InMemoryBusConfig } from "../adapter/rest/inMemoryBusConfig";
+import { CreateProductCommand } from "../commands/productCommands";
 
 export class ProductService {
 
@@ -10,29 +12,32 @@ export class ProductService {
         this.productRepository = new ProductRepository();
     }
 
-    async createBook(productData: Product): Promise<Product> {
+    async createProduct(productData: Product): Promise<Product> {
         let promise = new Promise<Product>((resolve: Function, reject: Function) => {
-            return this.productRepository.Insert(productData).then((bookInstance: Product) => {
-                resolve(bookInstance);
-            }).catch((error: Error) => {
+            try {
+                var newProudctCommand = new CreateProductCommand();
+                newProudctCommand.Name = productData.Name;
+                InMemoryBusConfig.getCommandBus().Send(newProudctCommand);
+                resolve(productData);
+            } catch (error) {
                 logger.error(error.message);
                 reject(error);
-            });
+            }
         });
         return promise;
     }
 
-    async updateProduct(productData: Product): Promise<Boolean> {
-        let promise = new Promise<Boolean>((resolve: Function, reject: Function) => {
-            return this.productRepository.Update(productData.id, productData).then((updated: Boolean) => {
-                resolve(updated);
-            }).catch((error: Error) => {
-                logger.error(error.message);
-                reject(error);
-            });
-        });
-        return promise;
-    }
+    // async updateProduct(productData: Product): Promise<Boolean> {
+    //     let promise = new Promise<Boolean>((resolve: Function, reject: Function) => {
+    //         return this.productRepository.Update(productData.id, productData).then((updated: Boolean) => {
+    //             resolve(updated);
+    //         }).catch((error: Error) => {
+    //             logger.error(error.message);
+    //             reject(error);
+    //         });
+    //     });
+    //     return promise;
+    // }
 
     async getProduct(productId: number): Promise<Product> {
         let promise = new Promise<Product>((resolve: Function, reject: Function) => {

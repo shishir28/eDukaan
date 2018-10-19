@@ -36,6 +36,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "force": "0.0.3",
+    "guid-typescript": "^1.0.7",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
@@ -44,6 +45,7 @@
     "sequelize": "^4.39.0",
     "sequelize-typescript": "^0.6.6",
     "tedious": "^2.6.4",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "eDukaanFramework": "file:../../BuildingBlocks/nodejs/framework"
   }
 }

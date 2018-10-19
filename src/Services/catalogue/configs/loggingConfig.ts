@@ -1,4 +1,5 @@
-import { LoggingConfig } from "../../../BuildingBlocks/nodejs/configs/loggingConfig";
+
+import {  LoggingConfig} from "eDukaanFramework"; 
 
 export const loggingConfig: LoggingConfig = {
     file: {

@@ -3,13 +3,18 @@ import * as express from "express";
 import * as path from "path";
 import * as serveStatic from "serve-static";
 import { ProductController } from './product.controller';
-
 import { AutoMapperBootStrapper } from "../../autoMapperBootStrapper";
+import {  ICommandBus, InMemoryCommandBus} from "eDukaanFramework"; 
+
+import { InMemoryBusConfig } from "./inMemoryBusConfig";
+
 class API {
     public api: express.Express;
 
+
     constructor() {
-        this.api = express();
+        this.api = express();     
+        InMemoryBusConfig.initialize();
         this.configureMiddlwares();
         this.mountRoutes();
         let tempMapper = new AutoMapperBootStrapper();
@@ -34,7 +39,7 @@ class API {
 
         this.api.use(bodyParser.json());
 
-        this.api.use(function (err, req, res, next) {
+        this.api.use(function (err:any, req:any, res:any, next:any) {
             console.error(err.stack)
         });
     }
