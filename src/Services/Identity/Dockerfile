@@ -22,6 +22,4 @@ WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Monad.EDukaan.Service.Identity.Web.Api.dll"]
 
-
-
 EXPOSE 9001
