@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
-namespace Monad.Service.ApiGatewayBase
+namespace Monad.EDukaan.Service.ApiGatewayBase
 {
     public class Program
     {
