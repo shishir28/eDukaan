@@ -4,18 +4,21 @@ import * as path from "path";
 import * as serveStatic from "serve-static";
 import { ProductController } from './product.controller';
 import { AutoMapperBootStrapper } from "../../autoMapperBootStrapper";
-import {  ICommandBus, InMemoryCommandBus} from "eDukaanFramework"; 
+import { ICommandBus, InMemoryCommandBus } from "eDukaanFramework";
+import { dbConfig } from '../../config/dbConfig'
 
 import { InMemoryBusConfig } from "./inMemoryBusConfig";
+import { Sequelize } from "edukaanframework/node_modules/sequelize-typescript";
 
 class API {
     public api: express.Express;
 
 
     constructor() {
-        this.api = express();     
+        this.api = express();
         InMemoryBusConfig.initialize();
         this.configureMiddlwares();
+        this.syncDatabase();
         this.mountRoutes();
         let tempMapper = new AutoMapperBootStrapper();
         tempMapper.bootstrap();
@@ -30,6 +33,27 @@ class API {
         this.api.use('/', router);
     }
 
+    private syncDatabase() {
+        const modalDir = dbConfig.ModalPath;
+
+        let sequelize = new Sequelize({
+            dialect: dbConfig.Dialect,
+            host: dbConfig.Host,
+            database: dbConfig.DBName,
+            username: dbConfig.Username,
+            password: dbConfig.Password,
+            modelPaths: [modalDir]
+        });
+
+        sequelize.authenticate().then((err) => {
+            sequelize.sync();
+            console.log('Connection successful', err);
+        }).catch((err) => {
+            console.log('Unable to connect to database', err);
+        });
+
+    }
+
     private configureMiddlwares(): void {
 
         // this.api.use(cors());
@@ -39,7 +63,7 @@ class API {
 
         this.api.use(bodyParser.json());
 
-        this.api.use(function (err:any, req:any, res:any, next:any) {
+        this.api.use(function (err: any, req: any, res: any, next: any) {
             console.error(err.stack)
         });
     }

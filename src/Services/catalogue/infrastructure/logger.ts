@@ -1,7 +1,7 @@
 import * as cluster from 'cluster';
 // import * as mkdirp from 'mkdirp';
 import * as path from 'path';
-import { loggingConfig } from '../configs/loggingConfig';
+import { loggingConfig } from '../config/loggingConfig';
 import * as winston from "winston";
 
 loggingConfig.file.filename = `${path.join(loggingConfig.directory, "../logs")}/${loggingConfig.file.filename}`;

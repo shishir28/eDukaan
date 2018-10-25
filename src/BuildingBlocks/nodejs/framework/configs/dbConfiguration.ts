@@ -5,4 +5,5 @@ export interface DBConfiguration  {
     Username:string;
     Password:string;
     ModalPath:string;
+    Dialect:string;
 }

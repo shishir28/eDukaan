@@ -5,12 +5,18 @@
   "main": "index.js",
   "scripts": {
     "init": "npm install",
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
+    "copyfiles": "copyfiles  ./config/config.js ./dist",
     "dev": "tsc --watch & nodemon dist",
     "test": "tsc && mocha dist/**/*.spec.js",
     "lint": "eslint src --ext ts",
     "tsc": "tsc",
-    "start": "node ./index.ts"
+    "serve": "node ./dist/index.js",
+    "migrate:up": "sequelize db:migrate",
+    "migrate:down": "tsc && sequelize db:migrate:undo:all",
+    "seed:up": "tsc && sequelize db:seed:all",
+    "seed:down": "tsc && sequelize db:seed:undo:all",
+    "db:dev:prepare": "rimraf ./dist && yarn build && yarn migrate:down && yarn migrate:up && yarn seed:down && yarn seed:up"
   },
   "devDependencies": {},
   "repository": {
@@ -26,26 +32,32 @@
   "homepage": "https://github.com/shishir28/eDukaan#readme",
   "dependencies": {
     "@types/express": "^4.16.0",
+    "@types/sequelize": "^4.27.28",
     "@types/tedious": "^2.6.1",
     "automapper-ts": "^1.9.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "cluster": "^0.7.7",
     "cookie-parser": "^1.4.3",
+    "copyfiles": "^2.1.0",
     "cors": "^2.8.4",
+    "eDukaanFramework": "file:../../BuildingBlocks/nodejs/framework",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "force": "0.0.3",
     "guid-typescript": "^1.0.7",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
+    "mssql": "^4.2.2",
     "nodemon": "^1.18.4",
     "path": "^0.12.7",
     "reflect-metadata": "^0.1.12",
+    "rimraf": "^2.6.2",
     "sequelize": "^4.39.0",
+    "sequelize-auto": "^0.4.29",
+    "sequelize-cli": "^5.2.0",
     "sequelize-typescript": "^0.6.6",
     "tedious": "^2.6.4",
-    "winston": "^3.1.0",
-    "eDukaanFramework": "file:../../BuildingBlocks/nodejs/framework"
+    "winston": "^3.1.0"
   }
 }

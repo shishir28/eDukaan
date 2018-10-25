@@ -1,23 +1,20 @@
-import * as express from "express";
-import * as expressServeStaticCore from "express-serve-static-core"
+import { BaseRepository } from 'eDukaanFramework';
+
+import { dbConfig } from '../config/dbConfig';
 import { Product } from '../domain/Product';
-import { DBContext, BaseRepository } from "eDukaanFramework"; 
-// import { serviceDBContext } from './serviceDBContext';
-import { logger } from "../infrastructure/logger";
-// import { DBContext } from "../../../BuildingBlocks/nodejs/persistence/dbContext";
-import { dbConfig } from "../configs/dbConfig";
+import { CatalogueDBContext, logger } from '../infrastructure';
 
 export class ProductRepository extends BaseRepository<Product>{
     constructor() {
-        super(Product, new DBContext(dbConfig), logger);
+        super(Product, new CatalogueDBContext(dbConfig), logger);
     }
 
     async ListAllProducts(): Promise<Product[]> {
         return await Product.findAll({
             attributes: ['id'],
         })
-        .then((data: any) => {
-                return data.map((y:any) => y.dataValues)
-        });
+            .then((data: any) => {
+                return data.map((y: any) => y.dataValues)
+            });
     }
 }
