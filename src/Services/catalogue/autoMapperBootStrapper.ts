@@ -8,6 +8,8 @@ export class AutoMapperBootStrapper {
     public bootstrap() {
         automapper.initialize((config: AutoMapperJs.IConfiguration) => {
             config.createMap('Product', 'ProductViewModel');
+            config.createMap('Category', 'CategoryViewModel');
+
         });
     }
 }

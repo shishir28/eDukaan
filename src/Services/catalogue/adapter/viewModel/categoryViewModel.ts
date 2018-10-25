@@ -1,0 +1,30 @@
+export class CategoryViewModel {
+    Id: number;    
+    Name: string;
+    Description: string;
+    Alias: string;
+    CategoryTemplateId: number;
+    MetaKeywords: string;
+    MetaDescription: string;
+    MetaTitle: string;
+    ParentCategoryId: number;
+    PictureId: number;    
+    PageSize: number;
+    AllowCustomersToSelectPageSize: boolean;
+    PageSizeOptions: string;
+    PriceRanges: string;
+    ShowOnHomePage: boolean;
+    HasDiscountsApplied: boolean;   
+    SubjectToAcl: boolean;  
+    LimitedToStores: boolean;
+    Published: boolean;
+    Deleted: boolean;
+    DisplayOrder: number;
+    CreatedOnUtc: Date;
+    UpdatedOnUtc: Date;
+    DefaultViewMode: string;
+    FullName: string;
+    BottomDescription: string;
+    BadgeText: string;
+    BadgeStyle: number;
+}

@@ -9,6 +9,7 @@ import { dbConfig } from '../../config/dbConfig'
 
 import { InMemoryBusConfig } from "./inMemoryBusConfig";
 import { Sequelize } from "edukaanframework/node_modules/sequelize-typescript";
+import { CategoryController } from "./category.controller";
 
 class API {
     public api: express.Express;
@@ -26,8 +27,11 @@ class API {
 
     private mountRoutes(): void {
         const router = express.Router();
-        let productController = new ProductController();
-        productController.addRoutes(this.api);
+        // let productController = new ProductController();
+        // productController.addRoutes(this.api);
+
+        let categoryController = new CategoryController();
+        categoryController.addRoutes(this.api);
 
         // need to check if request status is not 404 or oath does not start with api then 
         this.api.use('/', router);
