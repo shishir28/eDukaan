@@ -35,7 +35,6 @@ namespace Monad.EDukaan.Service.Identity.Web.Api.Data
             var env = services.GetService<IHostingEnvironment>();
             var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
             var settings = services.GetService<IOptions<AppSettings>>();
-            Console.WriteLine(services.GetService<UserManager<ApplicationUser>>());
             var userManager =  services.GetService<UserManager<ApplicationUser>>() as UserManager<ApplicationUser>;
 
             int retryForAvaiability = retry.Value;
@@ -111,7 +110,7 @@ namespace Monad.EDukaan.Service.Identity.Web.Api.Data
 
             return users;
         }
-          private IEnumerable<ApplicationUser> GetDefaultUser()
+         private IEnumerable<ApplicationUser> GetDefaultUser()
         {
             var user =
             new ApplicationUser()

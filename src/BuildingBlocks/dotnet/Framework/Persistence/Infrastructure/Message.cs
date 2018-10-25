@@ -15,11 +15,10 @@ namespace Monad.EDukaan.Service.Identity.Infrastructure
             this.Name = "";
         }
     }
+
     public class Command : Message
     {
-        public Command() : base()
-        {
-        }
+        public Command() : base(){}
     }
 
     public class IntegrationEvent : Message
