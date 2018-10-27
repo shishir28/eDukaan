@@ -1,6 +1,6 @@
 
 import {  ICommandBus, InMemoryCommandBus} from "eDukaanFramework"; 
-import { ProductSaga } from "../../sagas/productSaga";
+import { CategorySaga } from "../../sagas/categorySaga";
 
 export class InMemoryBusConfig {
 
@@ -8,8 +8,8 @@ export class InMemoryBusConfig {
 
     public static initialize() {
         let cmdBus = new InMemoryCommandBus();
-        let productSaga = new ProductSaga(cmdBus);        
-        cmdBus.RegisterSaga("CreateProductCommand",productSaga);
+        let categorySaga = new CategorySaga(cmdBus);        
+        cmdBus.RegisterSaga("CreateCategoryCommand",categorySaga);
         InMemoryBusConfig.commandBus = cmdBus;
     }
     

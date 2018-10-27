@@ -14,11 +14,11 @@ export class Category extends Model<Category> {
     @Column({ type: DataType.STRING })
     Name: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     Description: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     Alias: string
 
@@ -26,19 +26,19 @@ export class Category extends Model<Category> {
     @Column({ type: DataType.INTEGER })
     CategoryTemplateId: number
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     MetaKeywords: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     MetaDescription: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     MetaTitle: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.INTEGER })
     ParentCategoryId: number
 
@@ -54,11 +54,11 @@ export class Category extends Model<Category> {
     @Column({ type: DataType.BOOLEAN })
     AllowCustomersToSelectPageSize: boolean
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     PageSizeOptions: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     PriceRanges: string
 
@@ -98,19 +98,19 @@ export class Category extends Model<Category> {
     @Column({ type: DataType.DATE })
     UpdatedOnUtc: Date
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     DefaultViewMode: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     FullName: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     BottomDescription: string
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column({ type: DataType.STRING })
     BadgeText: string
 

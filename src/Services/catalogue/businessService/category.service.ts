@@ -3,7 +3,7 @@ import { CategoryRepository } from '../persistence/category.repository';
 import { Category } from "../domain/Category";
 import { logger } from '../infrastructure/logger';
 import { InMemoryBusConfig } from "../adapter/rest/inMemoryBusConfig";
-// import { CreateCategoryCommand } from "../commands/categoryCommands";
+import { CreateCategoryCommand } from "../commands/categoryCommands";
 
 export class CategoryService {
 
@@ -12,20 +12,20 @@ export class CategoryService {
         this.categoryRepository = new CategoryRepository();
     }
 
-    // async createCategory(categoryData: Category): Promise<Category> {
-    //     let promise = new Promise<Category>((resolve: Function, reject: Function) => {
-    //         try {
-    //             var newProudctCommand = new CreateCategoryCommand();
-    //             newProudctCommand.Name = categoryData.Name;
-    //             InMemoryBusConfig.getCommandBus().Send(newProudctCommand);
-    //             resolve(categoryData);
-    //         } catch (error) {
-    //             logger.error(error.message);
-    //             reject(error);
-    //         }
-    //     });
-    //     return promise;
-    // }
+    async createCategory(categoryData: Category): Promise<Category> {
+        let promise = new Promise<Category>((resolve: Function, reject: Function) => {
+            try {
+                var newProudctCommand = new CreateCategoryCommand();
+                newProudctCommand.Data = categoryData;
+                InMemoryBusConfig.getCommandBus().Send(newProudctCommand);
+                resolve(categoryData);
+            } catch (error) {
+                logger.error(error.message);
+                reject(error);
+            }
+        });
+        return promise;
+    }
 
     // async updateCategory(categoryData: Category): Promise<Boolean> {
     //     let promise = new Promise<Boolean>((resolve: Function, reject: Function) => {

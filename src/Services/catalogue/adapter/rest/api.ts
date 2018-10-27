@@ -19,7 +19,7 @@ class API {
         this.api = express();
         InMemoryBusConfig.initialize();
         this.configureMiddlwares();
-        this.syncDatabase();
+        // this.syncDatabase();
         this.mountRoutes();
         let tempMapper = new AutoMapperBootStrapper();
         tempMapper.bootstrap();

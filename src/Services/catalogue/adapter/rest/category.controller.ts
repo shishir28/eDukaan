@@ -8,7 +8,7 @@ export class CategoryController {
 
   private categoryService: CategoryService;
   public addRoutes(api: express.Router) {
-    //  api.post('/api/category', (request: express.Request, response: express.Response) => this.createCategory(request, response));
+      api.post('/api/category', (request: express.Request, response: express.Response) => this.createCategory(request, response));
     // api.put('/api/category/:id', (request: express.Request, response: express.Response) => this.updateCategory(request, response));
     api.get('/api/category/:id', (request: express.Request, response: express.Response) => this.getCategory(request, response));
     api.get('/api/category', (request: express.Request, response: express.Response) => this.getAllCategories(request, response));
@@ -19,17 +19,15 @@ export class CategoryController {
     this.categoryService = new CategoryService();
   }
 
-  // createCategory(request: express.Request, response: express.Response) {
-    
-  //   let categoryData = new Category();
-  //   categoryData.Name = request.body.Name;    
-  //   this.categoryService.createCategory(categoryData).then((categoryInstance: Category) => {
-  //     let result = (automapper.map('Category', 'CategoryViewModel', categoryInstance) as CategoryViewModel);
-  //     return response.status(201).send(result);
-  //   }).catch((error: Error) => {
-  //     return response.status(409).send(error);
-  //   });
-  // }
+  createCategory(request: express.Request, response: express.Response) {
+    let categoryData = request.body;    
+    this.categoryService.createCategory(categoryData).then((categoryInstance: Category) => {
+      let result = (automapper.map('Category', 'CategoryViewModel', categoryInstance) as CategoryViewModel);
+      return response.status(201).send(result);
+    }).catch((error: Error) => {
+      return response.status(409).send(error);
+    });
+  }
 
 
   getCategory(request: express.Request, response: express.Response) {
@@ -44,14 +42,11 @@ export class CategoryController {
 
   getAllCategories(request: express.Request, response: express.Response) {
     this.categoryService.getAllCategories().then((categories: Category[]) => {
-      console.log(categories);
       let result = (automapper.map('Category', 'CategoryViewModel', categories) as CategoryViewModel[]);
-      console.log(result);
       return response.status(200).send(result);
     }).catch((error: Error) => {
       return response.status(500).send(error);
     });
   }
-
 
 }

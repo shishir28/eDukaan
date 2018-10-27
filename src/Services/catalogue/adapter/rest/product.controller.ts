@@ -8,7 +8,7 @@ export class ProductController {
 
   private productService: ProductService;
   public addRoutes(api: express.Router) {
-     api.post('/api/product', (request: express.Request, response: express.Response) => this.createProduct(request, response));
+    //  api.post('/api/product', (request: express.Request, response: express.Response) => this.createProduct(request, response));
     // api.put('/api/product/:id', (request: express.Request, response: express.Response) => this.updateProduct(request, response));
     api.get('/api/product/:id', (request: express.Request, response: express.Response) => this.getProduct(request, response));
     api.get('/api/product', (request: express.Request, response: express.Response) => this.getAllProducts(request, response));
@@ -19,17 +19,17 @@ export class ProductController {
     this.productService = new ProductService();
   }
 
-  createProduct(request: express.Request, response: express.Response) {
+  // createProduct(request: express.Request, response: express.Response) {
     
-    let productData = new Product();
-    productData.Name = request.body.Name;    
-    this.productService.createProduct(productData).then((productInstance: Product) => {
-      let result = (automapper.map('Product', 'ProductViewModel', productInstance) as ProductViewModel);
-      return response.status(201).send(result);
-    }).catch((error: Error) => {
-      return response.status(409).send(error);
-    });
-  }
+  //   let productData = new Product();
+  //   productData.Name = request.body.Name;    
+  //   this.productService.createProduct(productData).then((productInstance: Product) => {
+  //     let result = (automapper.map('Product', 'ProductViewModel', productInstance) as ProductViewModel);
+  //     return response.status(201).send(result);
+  //   }).catch((error: Error) => {
+  //     return response.status(409).send(error);
+  //   });
+  // }
 
 
   getProduct(request: express.Request, response: express.Response) {
@@ -50,6 +50,4 @@ export class ProductController {
       return response.status(500).send(error);
     });
   }
-
-
 }

@@ -37,7 +37,4 @@ export class InMemoryCommandBus implements ICommandBus {
     public RegisterHandler<T>(): void {
 
     }
-
 }
-
-

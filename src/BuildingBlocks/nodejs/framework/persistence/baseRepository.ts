@@ -37,7 +37,10 @@ export abstract class BaseRepository<T> implements IBaseRepository<T>{
     }
 
     async Insert(model: T): Promise<T> {
-        return this._model.create(model.dataValues).then((entity: any) => {
+        console.log('Incoming value for insert is .....................');        
+        console.log(model);        
+        console.log('Incoming value for insert is .....................');        
+        return this._model.create(model).then((entity: any) => {
             this._logger.info(`Created entity with id ${entity.dataValues.id}.`);
             return entity.dataValues;
         });
@@ -56,7 +59,7 @@ export abstract class BaseRepository<T> implements IBaseRepository<T>{
     }
 
     async Update(identifier: number, model: T): Promise<Boolean> {
-        return this._model.update(model.dataValues, { where: { id: identifier } })
+        return this._model.update(model, { where: { id: identifier } })
             .then((results: [number, Array[T]]) => {
                 if (results.length > 0) {
                     this._logger.info(`Updated model with id ${identifier}.`);
