@@ -2,12 +2,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "buildApiGateway",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/src/Services/ApiGateways/Monad.Service.ApiGatewayBase/Monad.Service.ApiGatewayBase.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildIdentity",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Services/Identity/Monad.EDukaan.Service.Identity.Web.Api/Monad.EDukaan.Service.Identity.Web.Api.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -7,15 +7,15 @@ using System;
 
 namespace Monad.EDukaan.Service.Identity.Infrastructure.Data
 {
-   public class ApplicationDBContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
         }
-       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ResourceType>(b =>
             {
@@ -46,20 +46,25 @@ namespace Monad.EDukaan.Service.Identity.Infrastructure.Data
             modelBuilder.Entity<ApplicationUser>(b =>
             {
                 b.ToTable("ApplicationUser");
-                b.HasKey(u => u.Id);                
+                b.HasKey(u => u.Id);
             });
 
             modelBuilder.Entity<IdentityUserClaim<string>>(b =>
             {
                 b.ToTable("UserClaim");
                 b.HasKey(uc => uc.Id);
+                b.Property(uc => uc.UserId).HasColumnName("ApplicationUserId");
             });
+
 
             modelBuilder.Entity<IdentityUserRole<string>>(b =>
             {
                 b.ToTable("UserRole");
-                b.HasKey(r => new { r.UserId, r.RoleId });
-                
+                b.HasKey(ur => new { ur.UserId, ur.RoleId });
+                b.Property(ur => ur.UserId).HasColumnName("ApplicationUserId");
+                b.Property(ur => ur.RoleId).HasColumnName("ApplicationRoleId");
+
+
             });
         }
     }

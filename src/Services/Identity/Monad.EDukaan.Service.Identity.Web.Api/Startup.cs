@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Monad.EDukaan.Framework.Common.Middlewares;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-
 namespace Monad.EDukaan.Service.Identity.Web.Api
 {
     public class Startup
@@ -33,6 +33,7 @@ namespace Monad.EDukaan.Service.Identity.Web.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.Use(new UnhandledExceptionMiddleware().Process);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

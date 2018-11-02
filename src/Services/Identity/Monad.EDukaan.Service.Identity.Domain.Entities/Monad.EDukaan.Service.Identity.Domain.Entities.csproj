@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Monad.EDukaan.Service.Identity.Domain.Entities</RootNamespace>
+
   </PropertyGroup>
    <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.2" />
@@ -13,6 +15,5 @@
   <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\DotNet\Framework\Common\Monad.EDukaan.Framework.Common.csproj"/>
   </ItemGroup>
-
 
 </Project>

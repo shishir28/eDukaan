@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Monad.EDukaan.Service.Identity.Domain.Entities.Identity;
 using Monad.EDukaan.Service.Identity.Domain.Interfaces.Identity;
+using Monad.EDukaan.Service.Identity.Domain.Interfaces;
 using Monad.EDukaan.Service.Identity.Domain.Interfaces;
 using Monad.EDukaan.Service.Identity.Infrastructure.Data.Identity;
 using Monad.EDukaan.Service.Identity.Infrastructure.Data;
 using Monad.EDukaan.Service.Identity.Infrastructure.Data;
 using Monad.EDukaan.Service.Identity.Services.Business;
 using Monad.EDukaan.Service.Identity.Services.Interfaces;
-using Monad.EDukaan.Service.Identity.Domain.Interfaces;
 
 namespace Monad.EDukaan.Service.Identity.Web.Api
 {
@@ -32,12 +33,14 @@ namespace Monad.EDukaan.Service.Identity.Web.Api
                  });
             });
 
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                    .AddEntityFrameworkStores<ApplicationDBContext>();
+                    //.AddDefaultTokenProviders();
+
             services.AddTransient<IResourceTypeRepository, ResourceTypeRepository>();
             services.AddTransient<IActivityRepository, ActivityRepository>();
             services.AddTransient<IApplicationResourceRepository, ApplicationResourceRepository>();
             services.AddTransient<IRoleRightRepository, RoleRightRepository>();
-            services.AddTransient<IUserClaimRepository, UserClaimRepository>();
-            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
         }
 
         private static void InjectDependenciesForBL(IServiceCollection services)

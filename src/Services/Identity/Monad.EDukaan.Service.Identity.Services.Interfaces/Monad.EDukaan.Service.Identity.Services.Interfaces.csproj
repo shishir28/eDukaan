@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Monad.EDukaan.Service.Identity.Services.Interfaces</RootNamespace>
   </PropertyGroup>
   <ItemGroup>    
       <ProjectReference Include="..\..\..\BuildingBlocks\DotNet\Framework\Common\Monad.EDukaan.Framework.Common.csproj"/>

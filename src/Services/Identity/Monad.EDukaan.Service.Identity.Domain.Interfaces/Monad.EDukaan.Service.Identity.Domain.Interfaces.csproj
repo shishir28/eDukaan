@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Monad.EDukaan.Service.Identity.Domain.Interfaces</RootNamespace>
+
   </PropertyGroup>
 
   <ItemGroup>    

@@ -9,7 +9,7 @@
             "name": "API Gateway MS (web)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildApiGateway",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Services/ApiGateways/Monad.Service.ApiGatewayBase/bin/Debug/netcoreapp2.1/Monad.Service.ApiGatewayBase.dll",
             "args": [],
@@ -41,7 +41,7 @@
             "name": "Identity MS (web)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildIdentity",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Services/Identity/Monad.EDukaan.Service.Identity.Web.Api/bin/Debug/netcoreapp2.1/Monad.EDukaan.Service.Identity.Web.Api.dll",
             "args": [],
