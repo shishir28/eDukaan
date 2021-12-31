@@ -8,6 +8,11 @@ services:
       -  '27017:27017'   #port 27017 is exposed on the host
     volumes:
       - mongo_data:/data/db
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      -  '6379:6379'   #port 6379 is exposed on the host
        
   catalog.api:
     container_name: catalog.api
@@ -17,7 +22,7 @@ services:
       - "DatabaseSettings:DatabaseName=Catalog"
       - "DatabaseSettings:CollectionName=Products"
     depends_on:
-      - catalogdb    
+      - catalogdb
     ports:
       - "8000:80"
 
@@ -25,10 +30,8 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
-      - "DatabaseSettings:DatabaseName=Catalog"
-      - "DatabaseSettings:CollectionName=Products"
+      - "CacheSettings:ConnectionString=basketdb:6379"
     depends_on:
-      - catalogdb    
+      - basketdb
     ports:
       - "8001:80"  
