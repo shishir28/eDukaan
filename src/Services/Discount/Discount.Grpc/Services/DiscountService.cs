@@ -15,14 +15,12 @@ namespace Discount.Grpc.Services
         private readonly ILogger<DiscountService> _logger;
         private readonly IMapper _mapper;
 
-
         public DiscountService(IDiscountRepository discountRepository, IMapper mapper, ILogger<DiscountService> logger)
         {
             _discountRepository = discountRepository ?? throw new ArgumentNullException(nameof(discountRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger)); ;
         }
-
 
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
         {

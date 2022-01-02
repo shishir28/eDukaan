@@ -1,3 +1,4 @@
+using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,12 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddGrpcClient<Discount.Grpc.Protos.DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+   options.Address = new Uri(configuration.GetValue<string>("GrpcSettings:DiscountUrl"));
+});
+builder.Services.AddScoped<DiscountGrpcService>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
