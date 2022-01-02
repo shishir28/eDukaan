@@ -8,7 +8,6 @@ var configuration = builder.Configuration;
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = configuration.GetValue<string>("CacheSettings:ConnectionString");
-    // options.InstanceName = "SampleInstance";
 });
 
 builder.Services.AddControllers();
@@ -28,7 +27,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API V1"));
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
 
 }
 
