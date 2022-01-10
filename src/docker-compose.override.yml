@@ -34,6 +34,13 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - 1434:1433
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      -  '5672:5672'   #port 5672 is exposed on the host
+      - '15672:15672'   #port 15672 is exposed on the host
+
   pgadmin:
     container_name: pgadmin
     restart: always
