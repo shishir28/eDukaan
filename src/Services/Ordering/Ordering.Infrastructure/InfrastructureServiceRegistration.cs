@@ -35,6 +35,7 @@ namespace Ordering.Infrastructure
             var services = svcProvider.CreateScope().ServiceProvider;
             var dbContext = services.GetRequiredService<OrderContext>();
             dbContext.Database.Migrate();
+            OrderContextSeed.SeedAsync(dbContext);
         }
 
     }
