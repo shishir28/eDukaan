@@ -23,7 +23,7 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
 
         public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
-            var orderToDelete = _orderRepository.GetByIdAsync(request.Id);
+            var orderToDelete = await _orderRepository.GetByIdAsync(request.Id);
 
             if (orderToDelete == null)
             {
