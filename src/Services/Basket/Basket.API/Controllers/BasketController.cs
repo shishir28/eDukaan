@@ -1,6 +1,9 @@
+using AutoMapper;
 using Basket.API.Entities;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using EventBus.Messages.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Basket.API.Controllers
@@ -13,12 +16,17 @@ namespace Basket.API.Controllers
         private readonly ILogger<BasketController> _logger;
         private readonly IBasketRepository _basketRepository;
         private readonly DiscountGrpcService _discountGrpcService;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IMapper _mapper;
 
-
-        public BasketController(IBasketRepository basketRepository, DiscountGrpcService discountGrpcService, ILogger<BasketController> logger)
+        public BasketController(IBasketRepository basketRepository, DiscountGrpcService discountGrpcService,
+        IPublishEndpoint publishEndpoint,
+        IMapper mapper, ILogger<BasketController> logger)
         {
             _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
             _discountGrpcService = discountGrpcService ?? throw new ArgumentNullException(nameof(discountGrpcService));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -79,6 +87,37 @@ namespace Basket.API.Controllers
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data in the database");
+            }
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        {
+            try
+            {
+                //get the existing basket with total price
+                var basket = await _basketRepository.GetBasket(basketCheckout.UserName);
+                if (basket == null)
+                    return BadRequest();
+
+                //Create basket checkout event
+                var basketCheckoutEvent = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+
+                //Set the total price on checkout event
+                basketCheckoutEvent.TotalPrice = basket.TotalPrice;
+                // Send the event to the Rabbit MQ
+                await _publishEndpoint.Publish<BasketCheckoutEvent>(basketCheckoutEvent);
+                // remove the basket from redis cache
+                await _basketRepository.DeleteBasket(basketCheckout.UserName);
+
+                return Accepted();
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data in the database");
             }
         }
 
