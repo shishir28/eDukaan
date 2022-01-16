@@ -5,7 +5,8 @@ using Catalog.API.Entities;
 namespace Catalog.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
+
     public class CatalogController : ControllerBase
     {
         private readonly ILogger<CatalogController> _logger;

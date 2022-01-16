@@ -5,10 +5,9 @@ using Discount.API.Entities;
 namespace Discount.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class DiscountController : ControllerBase
     {
-
 
         private readonly ILogger<DiscountController> _logger;
         private readonly IDiscountRepository _discountRepository;

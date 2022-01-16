@@ -14,13 +14,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = configuration.GetValue<string>("CacheSettings:ConnectionString");
 });
 
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddAutoMapper(typeof(BasketProfile));
 
-
-builder.Services.AddControllers();
 builder.Services.AddGrpcClient<Discount.Grpc.Protos.DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
     options.Address = new Uri(configuration.GetValue<string>("GrpcSettings:DiscountUrl"));
 });
+
 builder.Services.AddScoped<DiscountGrpcService>();
 
 //MassTransit Config
@@ -38,6 +39,8 @@ builder.Services.AddMassTransit(config =>
 
 builder.Services.AddMassTransitHostedService();
 
+builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -45,8 +48,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Basket.API", Version = "v1" });
 });
 
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddAutoMapper(typeof(BasketProfile));
+
 
 var app = builder.Build();
 

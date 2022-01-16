@@ -8,7 +8,7 @@ using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 namespace Ordering.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
@@ -52,13 +52,13 @@ namespace Ordering.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete( "{id}", Name = "DeleteOrder")]
+        [HttpDelete("{id}", Name = "DeleteOrder")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Unit>> DeleteOrder(int id)
         {
-            var result = await _mediator.Send(new DeleteOrderCommand { Id = id});
+            var result = await _mediator.Send(new DeleteOrderCommand { Id = id });
             return Ok(result);
         }
 
