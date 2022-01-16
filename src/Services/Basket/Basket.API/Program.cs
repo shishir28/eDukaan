@@ -15,6 +15,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 
+
 builder.Services.AddControllers();
 builder.Services.AddGrpcClient<Discount.Grpc.Protos.DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
@@ -23,14 +24,14 @@ builder.Services.AddGrpcClient<Discount.Grpc.Protos.DiscountProtoService.Discoun
 builder.Services.AddScoped<DiscountGrpcService>();
 
 //MassTransit Config
-builder.Services.AddMassTransit(congfig =>
+builder.Services.AddMassTransit(config =>
 {
-    congfig.UsingRabbitMq((ctx, cfg) =>
+    config.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(new Uri(configuration.GetValue<string>("RabbitMqSettings:Host")), hostConfigurator =>
+        cfg.Host(new Uri(configuration.GetValue<string>("EventBusSettings:Host")), hostConfigurator =>
         {
-            hostConfigurator.Username(configuration.GetValue<string>("RabbitMqSettings:Username"));
-            hostConfigurator.Password(configuration.GetValue<string>("RabbitMqSettings:Password"));
+            hostConfigurator.Username(configuration.GetValue<string>("EventBusSettings:Username"));
+            hostConfigurator.Password(configuration.GetValue<string>("EventBusSettings:Password"));
         });
     });
 });
