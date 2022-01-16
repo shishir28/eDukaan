@@ -20,7 +20,7 @@ namespace Ordering.API.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet("{userName}", Name = "GetOrders")]
+        [HttpGet("{userName}", Name = "GetOrder")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrdersVm>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
