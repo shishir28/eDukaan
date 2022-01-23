@@ -1,6 +1,5 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
- 
   "profiles": {
     "Catalog.API": {
       "commandName": "Project",
@@ -9,7 +8,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5001",
+      "applicationUrl": "http://localhost:5002",
       "dotnetRunMessages": true
     },
     "Docker": {

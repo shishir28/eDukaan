@@ -56,7 +56,6 @@ services:
     container_name: portainer
     restart: always
     ports:
-      -  '8080:8000'   
       -  '9000:9000'   
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
@@ -72,7 +71,7 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "8000:80"
+      - "8001:80"
 
   basket.api:
     container_name: basket.api
@@ -88,7 +87,7 @@ services:
       - basketdb
       - rabbitmq
     ports:
-      - "8001:80"  
+      - "8002:80"  
   discount.api:
     container_name: discount.api
     environment:
@@ -97,7 +96,7 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "8002:80"  
+      - "8003:80"  
   discount.grpc:
     container_name: discount.grpc
     environment:
@@ -106,7 +105,7 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "8003:80"  
+      - "8004:80"  
   order.api:
     container_name: order.api
     environment:
@@ -119,7 +118,7 @@ services:
       - orderdb
       - rabbitmq
     ports:
-      - "8004:80"
+      - "8005:80"
   
   ocelotapigw:
     container_name: ocelotapigw
@@ -145,4 +144,4 @@ services:
       - basket.api
       - order.api
     ports:
-      - "8005:80"
+      - "8008:80"
