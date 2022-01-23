@@ -8,6 +8,16 @@ services:
       -  '27017:27017'   #port 27017 is exposed on the host
     volumes:
       - mongo_data:/data/db
+  
+  identitydb:
+    container_name: identitydb
+    restart: always
+    environment:
+      SA_PASSWORD: "test123#"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1434:1433
+ 
   basketdb:
     container_name: basketdb
     restart: always
@@ -33,7 +43,7 @@ services:
       SA_PASSWORD: "test123#"
       ACCEPT_EULA: "Y"
     ports:
-      - 1434:1433
+      - 1435:1433
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -60,7 +70,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
       - portainer_data:/data
-  
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:IdentityConnectionString=Server=identitydb;Database=OrderDb;User Id=sa;Password=test123#"  
+    ports:
+    - "8000:80"  
+    depends_on:
+      - identitydb
+
   catalog.api:
     container_name: catalog.api
     environment:

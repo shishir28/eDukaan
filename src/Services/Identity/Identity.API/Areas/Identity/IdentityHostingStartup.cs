@@ -19,7 +19,7 @@ namespace Identity.API.Areas.Identity
             {
                 services.AddDbContext<IdentityContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("IdentityContextConnection")));
+                        context.Configuration.GetConnectionString("IdentityConnectionString")));
 
                 //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 //    .AddEntityFrameworkStores<IdentityContext>()

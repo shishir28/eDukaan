@@ -10,6 +10,8 @@ services:
   discountdb:
     image: postgres  
   
+  identitydb:
+    image: mcr.microsoft.com/mssql/server:2017-latest 
   orderdb:
     image: mcr.microsoft.com/mssql/server:2017-latest 
   rabbitmq:
@@ -57,9 +59,14 @@ services:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
 
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
-
