@@ -57,7 +57,7 @@ namespace Basket.API.UnitTests
         }
 
         [Fact]
-        public async void ReturnEmptyShoppingCart()
+        public async Task ReturnEmptyShoppingCart()
         {
             // Arrange
             _mockBasketRepository.Setup(x => x.GetBasket("testUser")).ReturnsAsync(new ShoppingCart("testUser"));
@@ -76,7 +76,7 @@ namespace Basket.API.UnitTests
         }
 
         [Fact]
-        public async void ReturnNonEmptyShoppingCart()
+        public async Task ReturnNonEmptyShoppingCart()
         {
             // Arrange          
             var userName = "testUser";

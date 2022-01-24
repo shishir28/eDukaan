@@ -20,7 +20,6 @@ namespace Catalog.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
@@ -42,11 +41,19 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Product>> GetProductById(string id)
         {
-            var product = await _productRepository.GetProductById(id);
-            if (product == null)
-                return NotFound();
+            try
+            {
+                var product = await _productRepository.GetProductById(id);
+                if (product == null)
+                    return NotFound();
 
-            return Ok(product);
+                return Ok(product);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }                     
         }
 
         [HttpGet("[action]/{category}", Name = "GetProductByCategory")]
@@ -92,8 +99,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]      
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
@@ -110,9 +116,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]        
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
@@ -130,8 +134,6 @@ namespace Catalog.API.Controllers
 
         [HttpDelete("{id:length(24)}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteProduct(string id)
         {
@@ -146,10 +148,6 @@ namespace Catalog.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the product");
             }
         }
-
-
-
-
 
     }
 }
