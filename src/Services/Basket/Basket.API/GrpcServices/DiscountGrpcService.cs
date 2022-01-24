@@ -3,7 +3,7 @@ using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.API.GrpcServices
 {
-    public class DiscountGrpcService
+    public class DiscountGrpcService : IDiscountGrpcService
     {
         private readonly ILogger<DiscountGrpcService> _logger;
         private readonly DiscountProtoServiceClient _discountProtoService;

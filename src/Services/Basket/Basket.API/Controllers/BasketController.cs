@@ -15,11 +15,11 @@ namespace Basket.API.Controllers
 
         private readonly ILogger<BasketController> _logger;
         private readonly IBasketRepository _basketRepository;
-        private readonly DiscountGrpcService _discountGrpcService;
+        private readonly IDiscountGrpcService _discountGrpcService;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IMapper _mapper;
 
-        public BasketController(IBasketRepository basketRepository, DiscountGrpcService discountGrpcService,
+        public BasketController(IBasketRepository basketRepository, IDiscountGrpcService discountGrpcService,
         IPublishEndpoint publishEndpoint,
         IMapper mapper, ILogger<BasketController> logger)
         {

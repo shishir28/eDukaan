@@ -19,7 +19,6 @@ namespace Basket.API.Repositories
                 return null;
 
             return JsonConvert.DeserializeObject<ShoppingCart>(basket);
-
         }
 
         public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)

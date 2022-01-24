@@ -22,7 +22,7 @@ builder.Services.AddGrpcClient<Discount.Grpc.Protos.DiscountProtoService.Discoun
     options.Address = new Uri(configuration.GetValue<string>("GrpcSettings:DiscountUrl"));
 });
 
-builder.Services.AddScoped<DiscountGrpcService>();
+builder.Services.AddScoped<IDiscountGrpcService,DiscountGrpcService>();
 
 //MassTransit Config
 builder.Services.AddMassTransit(config =>
