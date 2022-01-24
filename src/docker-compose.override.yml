@@ -167,8 +167,7 @@ services:
       - "8008:80"
 
   mvc.ui:
-    container_name: shopping.aggregator
-
+    container_name: mvc.ui
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ApiSettings:GatewayAddress=http://ocelotapigw"
