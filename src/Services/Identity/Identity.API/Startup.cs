@@ -2,8 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4;
-using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -11,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Identity.API.Areas.Identity.Data;
+using System;
 
 namespace Identity.API
 {
@@ -28,7 +27,15 @@ namespace Identity.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.AddRazorPages();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -40,7 +47,6 @@ namespace Identity.API
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             }).AddAspNetIdentity<ApplicationUser>();
-            //.AddTestUsers(TestUsers.Users);
 
             // in-memory, code config
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
@@ -63,9 +69,10 @@ namespace Identity.API
             //     options.ClientId = "copy client ID from Google here";
             //     options.ClientSecret = "copy client secret from Google here";
             // });
+
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app ,  IServiceProvider serviceProvider)
         {
             if (Environment.IsDevelopment())
             {
@@ -74,7 +81,10 @@ namespace Identity.API
 
             app.UseStaticFiles();
 
+            serviceProvider.MigrateDB();
+            app.UseCors("CorsPolicy");
             app.UseRouting();
+   
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
