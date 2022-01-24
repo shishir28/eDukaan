@@ -21,6 +21,12 @@ services:
 
   portainer:
     image: portainer/portainer-ce
+  
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -58,12 +64,6 @@ services:
     build:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
-
-  identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
-    build:
-      context: .
-      dockerfile: Services/Identity/Identity.API/Dockerfile
 
 volumes:
   mongo_data:

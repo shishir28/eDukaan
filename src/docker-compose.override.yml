@@ -72,9 +72,10 @@ services:
       - portainer_data:/data
 
   identity.api:
+    container_name: identity.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:IdentityConnectionString=Server=identitydb;Database=OrderDb;User Id=sa;Password=test123#"  
+      - "ConnectionStrings:IdentityConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
     ports:
     - "8000:80"  
     depends_on:
