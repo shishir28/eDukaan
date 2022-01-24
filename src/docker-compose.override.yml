@@ -165,3 +165,12 @@ services:
       - order.api
     ports:
       - "8008:80"
+
+  mvc.ui:
+    container_name: shopping.aggregator
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    ports:
+      - "8100:80"

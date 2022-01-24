@@ -65,6 +65,12 @@ services:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
 
+  mvc.ui:
+    image: ${DOCKER_REGISTRY-}mvcui
+    build:
+      context: .
+      dockerfile: UI/MVC.UI/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
