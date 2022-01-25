@@ -45,17 +45,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Aggregator", "ApiG
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{2D596EE2-43C5-438B-913C-D33B682D436A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API", "Services\Identity\Identity.API\Identity.API.csproj", "{D83E92F3-AC8E-4EE5-BD8B-D7BB606D4E1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Services\Identity\Identity.API\Identity.API.csproj", "{D83E92F3-AC8E-4EE5-BD8B-D7BB606D4E1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{2698A0F6-EB2D-47C2-949C-EB0186439636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.UI", "UI\MVC.UI\MVC.UI.csproj", "{CED28713-CC44-40A6-A907-DF064C607855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC.UI", "UI\MVC.UI\MVC.UI.csproj", "{CED28713-CC44-40A6-A907-DF064C607855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API.UnitTests", "Services\Basket\Basket.API.UnitTests\Basket.API.UnitTests.csproj", "{90789CC5-1609-4115-AF97-DB409C82E054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.API.UnitTests", "Services\Basket\Basket.API.UnitTests\Basket.API.UnitTests.csproj", "{90789CC5-1609-4115-AF97-DB409C82E054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API.UnitTests", "Services\Catalog\Catalog.API.UnitTests\Catalog.API.UnitTests.csproj", "{E651A55C-978A-4AA3-AA55-3E2B27B5769F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API.UnitTests", "Services\Catalog\Catalog.API.UnitTests\Catalog.API.UnitTests.csproj", "{E651A55C-978A-4AA3-AA55-3E2B27B5769F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.API.UnitTests", "Services\Discount\Discount.API.UnitTests\Discount.API.UnitTests.csproj", "{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API.UnitTests", "Services\Discount\Discount.API.UnitTests\Discount.API.UnitTests.csproj", "{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.API.UnitTests", "Services\Ordering\Ordering.API.UnitTests\Ordering.API.UnitTests.csproj", "{B5520450-F477-45FA-AD86-D996372C427E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,10 @@ Global
 		{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5520450-F477-45FA-AD86-D996372C427E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5520450-F477-45FA-AD86-D996372C427E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5520450-F477-45FA-AD86-D996372C427E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5520450-F477-45FA-AD86-D996372C427E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,6 +167,7 @@ Global
 		{90789CC5-1609-4115-AF97-DB409C82E054} = {DF177D14-3C5D-4B35-98BE-B1A2A23FFFD6}
 		{E651A55C-978A-4AA3-AA55-3E2B27B5769F} = {D28CC841-9FE1-4A1C-8245-3E18006B4F03}
 		{EDF0BB5B-99E0-46DD-9BDF-32CD31E61009} = {3989964F-5733-4403-898E-2915BC7ADAEB}
+		{B5520450-F477-45FA-AD86-D996372C427E} = {96216C96-EBA5-41A4-A465-93C28C8C1C84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F10EA296-C18C-4EE2-9713-E9F378FB4D8D}
