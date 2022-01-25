@@ -17,12 +17,10 @@ namespace Catalog.API.UnitTests
         private readonly Mock<IProductRepository> _mockProductRepository;
         private CatalogController _sut;
 
-
         public CatalogControllerShould()
         {
             _mockProductRepository = new Mock<IProductRepository>();
             _mockLogger = new Mock<ILogger<CatalogController>>();
-
             this.IntialieCatalogController();
         }
 

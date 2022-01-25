@@ -20,7 +20,6 @@ namespace Discount.API.Controllers
 
         [HttpGet("{productName}", Name = "GetDiscount")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Coupon>> GetDiscount(string productName)
         {
@@ -38,7 +37,6 @@ namespace Discount.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Coupon>> CreateDiscount([FromBody] Coupon coupon)
         {
@@ -55,14 +53,16 @@ namespace Discount.API.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Coupon))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Coupon>> UpdateDiscount([FromBody] Coupon coupon)
+        public async Task<ActionResult<bool>> UpdateDiscount([FromBody] Coupon coupon)
         {
             try
             {
-                return Ok(await _discountRepository.UpdateDiscount(coupon));
+               return Ok(await _discountRepository.UpdateDiscount(coupon));
+                //await _discountRepository.UpdateDiscount(coupon);
+                //return NoContent();
             }
             catch (System.Exception ex)
             {
@@ -72,13 +72,16 @@ namespace Discount.API.Controllers
         }
 
         [HttpDelete("{productName}", Name = "DeleteDiscount")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Coupon>> DeleteDiscount(string productName)
+        public async Task<ActionResult<bool>> DeleteDiscount(string productName)
         {
             try
             {
+                //await _discountRepository.DeleteDiscount(productName);
+                //return NoContent();
                 return Ok(await _discountRepository.DeleteDiscount(productName));
             }
             catch (System.Exception ex)
