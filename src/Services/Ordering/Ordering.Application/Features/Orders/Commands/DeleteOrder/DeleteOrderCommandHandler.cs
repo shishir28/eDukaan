@@ -16,9 +16,9 @@ namespace Ordering.Application.Features.Orders.Commands.DeleteOrder
 
         public DeleteOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, ILogger<DeleteOrderCommandHandler> logger)
         {
-            _orderRepository = orderRepository ?? throw new System.ArgumentNullException(nameof(orderRepository));
-            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
-            _logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)

@@ -9,7 +9,7 @@ namespace Catalog.API.Repositories
     {
         private readonly ICatalogContext _context;
         public ProductRepository(ICatalogContext context) =>
-            _context = context ?? throw new System.ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
 
         public async Task<IEnumerable<Product>> GetProducts() =>
              await _context.Products.Find(x => true).ToListAsync();

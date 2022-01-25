@@ -28,7 +28,7 @@ namespace Discount.API.Controllers
                 var discount = await _discountRepository.GetDiscount(productName);
                 return Ok(discount);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
@@ -45,7 +45,7 @@ namespace Discount.API.Controllers
                 await _discountRepository.CreateDiscount(coupon);
                 return CreatedAtRoute("GetDiscount", new { productName = coupon.ProductName }, coupon);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error creating data in the database");
@@ -60,11 +60,11 @@ namespace Discount.API.Controllers
         {
             try
             {
-               return Ok(await _discountRepository.UpdateDiscount(coupon));
+                return Ok(await _discountRepository.UpdateDiscount(coupon));
                 //await _discountRepository.UpdateDiscount(coupon);
                 //return NoContent();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data in the database");
@@ -84,7 +84,7 @@ namespace Discount.API.Controllers
                 //return NoContent();
                 return Ok(await _discountRepository.DeleteDiscount(productName));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data from the database");

@@ -19,7 +19,7 @@ namespace Ordering.Application.Behaviours
                 return await next();
 
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 var requestName = typeof(TRequest).Name;
                 _logger.LogError($"An unhandled exception occured within the '{requestName}' request {request}.");

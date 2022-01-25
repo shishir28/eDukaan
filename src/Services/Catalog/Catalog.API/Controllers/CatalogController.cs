@@ -14,8 +14,8 @@ namespace Catalog.API.Controllers
 
         public CatalogController(IProductRepository productRepository, ILogger<CatalogController> logger)
         {
-            _productRepository = productRepository ?? throw new System.ArgumentNullException(nameof(productRepository));
-            _logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -27,13 +27,12 @@ namespace Catalog.API.Controllers
             {
                 return Ok(await _productRepository.GetProducts());
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
-
 
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
@@ -49,11 +48,11 @@ namespace Catalog.API.Controllers
 
                 return Ok(product);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
-            }                     
+            }
         }
 
         [HttpGet("[action]/{category}", Name = "GetProductByCategory")]
@@ -70,7 +69,7 @@ namespace Catalog.API.Controllers
 
                 return Ok(product);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
@@ -91,7 +90,7 @@ namespace Catalog.API.Controllers
 
                 return Ok(product);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
@@ -99,7 +98,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]      
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
@@ -108,7 +107,7 @@ namespace Catalog.API.Controllers
                 await _productRepository.Create(product);
                 return CreatedAtRoute("GetProduct", new { id = product.Id.ToString() }, product);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error creating the product");
@@ -116,7 +115,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]        
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
@@ -125,7 +124,7 @@ namespace Catalog.API.Controllers
                 await _productRepository.Update(product);
                 return NoContent();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating the product");
@@ -142,7 +141,7 @@ namespace Catalog.API.Controllers
                 await _productRepository.Delete(id);
                 return NoContent();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the product");

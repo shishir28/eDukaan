@@ -41,7 +41,7 @@ namespace Basket.API.Controllers
                 var basekt = await _basketRepository.GetBasket(userName);
                 return Ok(basekt ?? new ShoppingCart(userName));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
@@ -65,7 +65,7 @@ namespace Basket.API.Controllers
                 }
                 return Ok(await _basketRepository.UpdateBasket(basket));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data in the database");
@@ -83,7 +83,7 @@ namespace Basket.API.Controllers
                 await _basketRepository.DeleteBasket(userName);
                 return Ok();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data in the database");
@@ -114,7 +114,7 @@ namespace Basket.API.Controllers
 
                 return Accepted();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data in the database");

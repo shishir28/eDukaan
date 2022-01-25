@@ -18,10 +18,10 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
 
         public CheckoutOrderCommandHandler(IOrderRepository orderRepository, IEmailService emailService, IMapper mapper, ILogger<CheckoutOrderCommandHandler> logger)
         {
-            _orderRepository = orderRepository ?? throw new System.ArgumentNullException(nameof(orderRepository));
-            _emailService = emailService ?? throw new System.ArgumentNullException(nameof(emailService));
-            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
-            _logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             {
                 await _emailService.SendEmail(email);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
 
                 _logger.LogError($"Order {order.Id} failed due to an error with the mail service: {ex.Message}"); ;
