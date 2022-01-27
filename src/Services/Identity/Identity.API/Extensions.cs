@@ -1,25 +1,60 @@
-﻿using IdentityServer4.Stores;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Polly;
 
 namespace Identity.API
 {
-    public static class Extensions
+    public static class IWebHostExtensions
     {
-        /// <summary>
-        /// Determines whether the client is configured to use PKCE.
-        /// </summary>
-        /// <param name="store">The store.</param>
-        /// <param name="client_id">The client identifier.</param>
-        /// <returns></returns>
-        public static async Task<bool> IsPkceClientAsync(this IClientStore store, string client_id)
+
+        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
         {
-            if (!string.IsNullOrWhiteSpace(client_id))
+
+            using (var scope = webHost.Services.CreateScope())
             {
-                var client = await store.FindEnabledClientByIdAsync(client_id);
-                return client?.RequirePkce == true;
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<TContext>>();
+                var context = services.GetService<TContext>();
+
+                try
+                {
+                    logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
+
+                    var retries = 10;
+                    var retry = Policy.Handle<SqlException>()
+                        .WaitAndRetry(
+                            retryCount: retries,
+                            sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                            onRetry: (exception, timeSpan, retry, ctx) =>
+                            {
+                                logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(TContext), exception.GetType().Name, exception.Message, retry, retries);
+                            });
+
+                    //if the sql server container is not created on run docker compose this
+                    //migration can't fail for network related exception. The retry options for DbContext only 
+                    //apply to transient exceptions
+                    // Note that this is NOT applied when running some orchestrators (let the orchestrator to recreate the failing service)
+                    retry.Execute(() => InvokeSeeder(seeder, context, services));
+
+
+                    logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(TContext).Name);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "An error occurred while migrating the database used on context {DbContextName}", typeof(TContext).Name);                   
+                }
             }
 
-            return false;
+            return webHost;
+        }
+
+        private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider> seeder, TContext context, IServiceProvider services)
+            where TContext : DbContext
+        {
+            context.Database.Migrate();
+            seeder(context, services);
         }
     }
 }

@@ -75,7 +75,17 @@ services:
     container_name: identity.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:IdentityConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
+      - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
+      - "MvcClient=http://mvc.ui"  
+      - "CatalogApiClient=http://catalog.api"  
+      - "BasketApiClient=http://basket.api"  
+      - "DiscountApiClient=http://discount.api"  
+      - "OrderingApiClient=http://order.api"  
+      - "WebShoppingAgg=http://shopping.aggregator"  
+      - "UseCustomizationData=false"  
+      - "TokenLifetimeMinutes=120"  
+      - "UseVault=false"  
+      - "PermanentTokenLifetimeDays=365"  
     ports:
     - "8000:80"  
     depends_on:

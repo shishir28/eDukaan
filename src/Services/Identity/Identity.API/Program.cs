@@ -1,60 +1,65 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+﻿
+using Identity.API;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
-using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using IdentityServer4.EntityFramework.Entities;
 
-namespace Identity.API
+string Namespace = typeof(Startup).Namespace;
+string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
+var configuration = GetConfiguration();
+
+try
 {
-    public class Program
-    {
-        public static int Main(string[] args)
+    var host = BuildWebHost(configuration, args);
+
+    host.MigrateDbContext<PersistedGrantDbContext>((_, __) => { })
+        .MigrateDbContext<ApplicationDbContext>((context, services) =>
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                // uncomment to write to Azure diagnostics stream
-                //.WriteTo.File(
-                //    @"D:\home\LogFiles\Application\identityserver.txt",
-                //    fileSizeLimitBytes: 1_000_000,
-                //    rollOnFileSizeLimit: true,
-                //    shared: true,
-                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
-                .CreateLogger();
+            var env = services.GetService<IWebHostEnvironment>();
+            var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
+            var settings = services.GetService<IOptions<AppSettings>>();
 
-            try
-            {
-                Log.Information("Starting host...");
-                CreateHostBuilder(args).Build().Run();
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly.");
-                return 1;
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
+            new ApplicationDbContextSeed()
+                .SeedAsync(context, env, logger, settings)
+                .Wait();
+        })
+        .MigrateDbContext<ConfigurationDbContext>((context, services) =>
+        {
+            new ConfigurationDbContextSeed()
+                .SeedAsync(context, configuration)
+                .Wait();
+        });
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    host.Run();
+
+    return 0;
+}
+catch (Exception ex)
+{
+    return 1;
+}
+finally
+{
+}
+
+IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+        .CaptureStartupErrors(false)
+        .ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
+        .UseStartup<Startup>()
+        .UseContentRoot(Directory.GetCurrentDirectory())
+        //.UseSerilog()
+        .Build();
+
+IConfiguration GetConfiguration()
+{
+    var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables();
+
+    var config = builder.Build();
+    return builder.Build();
 }
