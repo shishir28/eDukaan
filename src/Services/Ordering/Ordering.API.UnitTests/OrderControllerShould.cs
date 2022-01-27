@@ -4,13 +4,11 @@ using Ordering.API.Controllers;
 using Xunit;
 using MediatR;
 using System.Threading.Tasks;
-using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Ordering.Application.Features.Orders.Commands.CheckoutOrder;
 using Ordering.Application.Features.Orders.Commands.UpdateOrder;
 using Ordering.Application.Features.Orders.Commands.DeleteOrder;
-using GetOrdersList = Ordering.Application.Features.Orders.Queries.GetOrdersList;
 using System.Collections.Generic;
 using Ordering.Application.Features.Orders.Queries.GetOrdersList;
 
