@@ -1,5 +1,4 @@
-﻿using Identity.API.Models.AccountViewModels;
-using Identity.API.Models.ConsentViewModels;
+﻿using Identity.API.Models.ConsentViewModels;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Stores;

@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Razor.UI.Models;
 using Razor.UI.Services;
 
 namespace Razor.UI
+
 {
+    [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
     public class CartModel : PageModel
     {
         private readonly IBasketService _basketService;
@@ -13,7 +17,6 @@ namespace Razor.UI
         {
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
-
 
         public BasketModel Cart { get; set; } = new BasketModel();
 

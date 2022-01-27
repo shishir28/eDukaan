@@ -8,7 +8,7 @@
         public string DiscountApiClient { get; set; }
         public string OrderingApiClient { get; set; }
         public string WebShoppingAgg { get; set; }
-        public int UseCustomizationData { get; set; }
+        public bool UseCustomizationData { get; set; }
         public string TokenLifetimeMinutes { get; set; }
         public bool UseVault { get; set; }
         public int PermanentTokenLifetimeDays { get; set; }

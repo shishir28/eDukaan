@@ -1,3 +1,4 @@
+using Razor.UI.Extensions;
 using Razor.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddHttpClient<IBasketService, BasketService>(c => c.BaseAddress
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c => c.BaseAddress = new Uri(configuration["ApiSettings:GatewayAddress"]));
 builder.Services.AddHttpClient<IOrderService, OrderService>(c => c.BaseAddress = new Uri(configuration["ApiSettings:GatewayAddress"]));
 
+builder.Services.AddCustomAuthentication(configuration);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -20,10 +22,12 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
+app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax });
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

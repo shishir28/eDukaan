@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Identity.API.Certificates;
 using Identity.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,11 +58,18 @@ namespace Identity.API
 
 
             // Adds IdentityServer
-            services.AddIdentityServer(x =>
+            services.AddIdentityServer(options =>
             {
-                x.IssuerUri = "null";
-                x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
+                options.EmitStaticAudienceClaim = true;
+                options.IssuerUri = "null";
+                options.Authentication.CookieLifetime = TimeSpan.FromHours(2);
             })
+             .AddSigningCredential(Certificate.Get())
             .AddAspNetIdentity<ApplicationUser>()
                 .AddConfigurationStore(options =>
                 {
@@ -110,10 +118,10 @@ namespace Identity.API
 
             app.UseForwardedHeaders();
             // Adds IdentityServer
-            app.UseIdentityServer();
-
+            
             app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy =  Microsoft.AspNetCore.Http.SameSiteMode.Lax });
             app.UseRouting();
+            app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
             {

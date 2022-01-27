@@ -1,4 +1,5 @@
-﻿using Razor.UI.Models;
+﻿using Razor.UI.Extensions;
+using Razor.UI.Models;
 
 namespace Razor.UI.Services
 {
