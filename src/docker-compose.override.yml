@@ -76,7 +76,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
-      - "MvcClient=http://mvc.ui"  
+      - "RazorClient=http://razor.ui"  
       - "CatalogApiClient=http://catalog.api"  
       - "BasketApiClient=http://basket.api"  
       - "DiscountApiClient=http://discount.api"  
@@ -176,8 +176,8 @@ services:
     ports:
       - "8008:80"
 
-  mvc.ui:
-    container_name: mvc.ui
+  razor.ui:
+    container_name: razor.ui
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ApiSettings:GatewayAddress=http://ocelotapigw"

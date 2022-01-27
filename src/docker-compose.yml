@@ -65,11 +65,11 @@ services:
       context: .
       dockerfile: ApiGateways/Shopping.Aggregator/Dockerfile
 
-  mvc.ui:
-    image: ${DOCKER_REGISTRY-}mvcui
+  razor.ui:
+    image: ${DOCKER_REGISTRY-}razorui
     build:
       context: .
-      dockerfile: UI/MVC.UI/Dockerfile
+      dockerfile: UI/Razor.UI/Dockerfile
 
 volumes:
   mongo_data:

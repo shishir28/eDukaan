@@ -12,7 +12,7 @@ namespace Identity.API.Data
             //callbacks urls from config:
             var clientUrls = new Dictionary<string, string>();
 
-            clientUrls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
+            clientUrls.Add("RazorClient", configuration.GetValue<string>("RazorClient"));
             clientUrls.Add("CatalogApi", configuration.GetValue<string>("CatalogApiClient"));
             clientUrls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));            
             clientUrls.Add("DiscountApi", configuration.GetValue<string>("DiscountApiClient"));            
