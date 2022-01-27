@@ -9,7 +9,6 @@ namespace Shopping.Aggregator.Controllers
     public class ShoppingController : ControllerBase
     {
 
-        private readonly ILogger<ShoppingController> _logger;
         private readonly ICatalogService _catalogService;
         private readonly IBasketService _basketService;
         private readonly IOrderService _orderService;

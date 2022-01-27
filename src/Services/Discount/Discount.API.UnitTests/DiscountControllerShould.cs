@@ -69,8 +69,6 @@ namespace Discount.API.UnitTests
             Assert.NotNull(result);
             var response = Assert.IsType<ActionResult<Coupon>>(result);
             var objResult = response.Result as ObjectResult;
-
-            // Assert
             Assert.Equal(500, objResult.StatusCode.Value);
         }
 
