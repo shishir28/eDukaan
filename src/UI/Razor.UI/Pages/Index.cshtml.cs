@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Razor.UI.Models;
-using Razor.UI.Services;
-
-namespace Razor.UI.Pages
+﻿namespace Razor.UI.Pages
 {
     public class IndexModel : PageModel
     {

@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Razor.UI.Models;
-using Razor.UI.Services;
-
-namespace Razor.UI
+﻿namespace Razor.UI
 {
+    [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
     public class ProductModel : PageModel
     {
         private readonly ICatalogService _catalogServcie;

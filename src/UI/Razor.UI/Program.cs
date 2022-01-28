@@ -1,6 +1,3 @@
-using Razor.UI.Extensions;
-using Razor.UI.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 

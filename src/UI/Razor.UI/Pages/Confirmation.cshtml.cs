@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace Razor.UI
+﻿namespace Razor.UI
 {
     public class ConfirmationModel : PageModel
     {

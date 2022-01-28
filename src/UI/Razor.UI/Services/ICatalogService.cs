@@ -1,6 +1,4 @@
-﻿using Razor.UI.Models;
-
-namespace Razor.UI.Services
+﻿namespace Razor.UI.Services
 {
     public interface ICatalogService
     {

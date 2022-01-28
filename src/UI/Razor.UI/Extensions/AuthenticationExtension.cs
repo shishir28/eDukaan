@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Razor.UI.Extensions
 {
@@ -28,7 +27,7 @@ namespace Razor.UI.Extensions
            {
                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                options.Authority = identityUrl.ToString();
-               //options.SignedOutRedirectUri = callBackUrl.ToString();
+               options.SignedOutRedirectUri = callBackUrl.ToString();
                options.ClientId = "razor";
                options.ClientSecret = "secret";
                options.ResponseType = "code";

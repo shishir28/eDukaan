@@ -1,7 +1,4 @@
-﻿using Razor.UI.Extensions;
-using Razor.UI.Models;
-
-namespace Razor.UI.Services
+﻿namespace Razor.UI.Services
 {
     public class BasketService : IBasketService
     {
