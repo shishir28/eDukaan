@@ -66,7 +66,7 @@ namespace Identity.API
                 options.Events.RaiseSuccessEvents = true;
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
-                options.IssuerUri = "null";
+                options.IssuerUri = Configuration["IssuerUri"];
                 options.Authentication.CookieLifetime = TimeSpan.FromHours(2);
             })
              .AddSigningCredential(Certificate.Get())
@@ -118,15 +118,15 @@ namespace Identity.API
 
             app.UseForwardedHeaders();
             // Adds IdentityServer
-            
-            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy =  Microsoft.AspNetCore.Http.SameSiteMode.Lax });
+
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax });
             app.UseRouting();
             app.UseIdentityServer();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapControllers();               
+                endpoints.MapControllers();
             });
         }
     }

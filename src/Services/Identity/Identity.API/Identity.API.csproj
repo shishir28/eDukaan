@@ -9,11 +9,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Certificate\idsrv3test.pfx" />
+	  <None Remove="Certificate\edukaan.pfx" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Certificate\idsrv3test.pfx" />
+	  <EmbeddedResource Include="Certificate\edukaan.pfx" />
 	</ItemGroup>
 
 	<ItemGroup>
