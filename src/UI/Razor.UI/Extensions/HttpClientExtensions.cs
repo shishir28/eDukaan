@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 namespace Razor.UI.Extensions
 {
@@ -42,21 +41,6 @@ namespace Razor.UI.Extensions
 
         public static void SetBearerToken(this HttpClient client, string token) =>
             client.SetToken(JwtConstants.TokenType, token);
-    }
-
-    public class BasicAuthenticationHeaderValue : AuthenticationHeaderValue
-    {
-        public BasicAuthenticationHeaderValue(string userName, string password)
-            : base("Basic", EncodeCredential(userName, password))
-        { }
-
-        private static string EncodeCredential(string userName, string password)
-        {
-            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
-            string credential = String.Format("{0}:{1}", userName, password);
-
-            return Convert.ToBase64String(encoding.GetBytes(credential));
-        }
     }
 
 }

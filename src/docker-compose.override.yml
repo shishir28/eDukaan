@@ -162,6 +162,7 @@ services:
     container_name: ocelotapigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "IdentityUrl=http://identity.api"
     depends_on:
       - catalog.api
       - basket.api
