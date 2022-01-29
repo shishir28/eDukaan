@@ -75,6 +75,7 @@ services:
     container_name: identity.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
       - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
       - "RazorClient=http://razor.ui"  
       - "CatalogApiClient=http://catalog.api"  
@@ -82,12 +83,19 @@ services:
       - "DiscountApiClient=http://discount.api"  
       - "OrderingApiClient=http://order.api"  
       - "WebShoppingAgg=http://shopping.aggregator"  
+      - "IssuerUri=http://identity.api"  
       - "UseCustomizationData=false"  
       - "TokenLifetimeMinutes=120"  
       - "UseVault=false"  
       - "PermanentTokenLifetimeDays=365"  
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=test123#"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/edukaan.pfx"
+    volumes:
+      - ~/.aspnet/https:/https:ro
     ports:
     - "8000:80"  
+    - "8300:443"  
+
     depends_on:
       - identitydb
 
@@ -180,10 +188,16 @@ services:
     container_name: razor.ui
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
       - "ApiSettings:GatewayAddress=http://ocelotapigw"
       - "IdentityUrl=http://identity.api"
       - "CallBackUrl=http://razor.ui"
       - "SessionCookieLifetimeMinutes=60"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=test123#"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/edukaan.pfx"
+    volumes:
+      - ~/.aspnet/https:/https:ro
 
     ports:
       - "8100:80"
+      - "8200:443"
