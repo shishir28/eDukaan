@@ -96,8 +96,6 @@ namespace Identity.API
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-
         }
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
@@ -108,7 +106,6 @@ namespace Identity.API
             }
 
             app.UseStaticFiles();
-
 
             app.Use(async (context, next) =>
             {
