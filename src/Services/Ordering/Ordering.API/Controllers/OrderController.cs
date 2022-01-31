@@ -4,11 +4,12 @@ using Ordering.Application.Features.Orders.Commands.CheckoutOrder;
 using Ordering.Application.Features.Orders.Commands.DeleteOrder;
 using Ordering.Application.Features.Orders.Commands.UpdateOrder;
 using Ordering.Application.Features.Orders.Queries.GetOrdersList;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Ordering.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize("ClientIdPolicy")]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;

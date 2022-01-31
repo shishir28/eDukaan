@@ -120,6 +120,7 @@ services:
       - "EventBusSettings:Host=amqp://rabbitmq:5672"
       - "EventBusSettings:Username=guest"
       - "EventBusSettings:Password=guest"
+      - "IdentityUrl=http://identity.api"
 
     depends_on:
       - basketdb
@@ -131,6 +132,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
+      - "IdentityUrl=http://identity.api"
     depends_on:
       - discountdb
     ports:
@@ -152,6 +154,7 @@ services:
       - "EventBusSettings:Host=amqp://rabbitmq:5672"
       - "EventBusSettings:Username=guest"
       - "EventBusSettings:Password=guest"
+      - "IdentityUrl=http://identity.api"
     depends_on:
       - orderdb
       - rabbitmq
@@ -178,6 +181,7 @@ services:
       - "ApiSettings:CatalogUrl=http://catalog.api"
       - "ApiSettings:BasketUrl=http://basket.api"
       - "ApiSettings:OrderUrl=http://order.api"
+      - "IdentityUrl=http://identity.api"
     depends_on:
       - catalog.api
       - basket.api

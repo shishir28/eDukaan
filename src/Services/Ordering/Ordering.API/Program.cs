@@ -1,5 +1,7 @@
 using EventBus.Messages.Common;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Ordering.API.EventBusConsumer;
 using Ordering.API.Mappings;
 using Ordering.Application;
@@ -10,6 +12,26 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 
+
+var identityUrl = configuration.GetValue<string>("IdentityUrl");
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = identityUrl;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = false
+    };
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "razor", "orders"));
+});
 builder.Services.AddControllers();
 builder.Services.ApplicationService();
 
@@ -51,10 +73,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1"));
+    app.UseDeveloperExceptionPage();
 }
 
 app.Services.MigrateDB();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

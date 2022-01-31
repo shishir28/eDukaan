@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Discount.API.Repositories;
 using Discount.API.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Discount.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize("ClientIdPolicy")]
     public class DiscountController : ControllerBase
     {
-
         private readonly ILogger<DiscountController> _logger;
         private readonly IDiscountRepository _discountRepository;
 
@@ -90,7 +91,6 @@ namespace Discount.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data from the database");
             }
         }
-
 
     }
 }
