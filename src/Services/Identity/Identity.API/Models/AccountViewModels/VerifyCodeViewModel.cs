@@ -13,7 +13,7 @@
         [Display(Name = "Remember this browser?")]
         public bool RememberBrowser { get; init; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Keep me signed in?")]
         public bool RememberMe { get; init; }
     }
 }
