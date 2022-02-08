@@ -15,6 +15,19 @@
             return await response.ReadContentAs<List<CatalogModel>>();
         }
 
+        public async Task<IEnumerable<CatalogBrandModel>> GetCatalogBrand()
+        {
+            var response = await _client.GetAsync("/Catalog/Brands");
+            return await response.ReadContentAs<List<CatalogBrandModel>>();
+        }
+
+        public async Task<IEnumerable<CatalogCategoryModel>> GetCatalogCategory()
+        {
+            var response = await _client.GetAsync("/Catalog/Categories");
+            return await response.ReadContentAs<List<CatalogCategoryModel>>();
+        }
+
+
         public async Task<CatalogModel> GetCatalog(string id)
         {
             var response = await _client.GetAsync($"/Catalog/{id}");

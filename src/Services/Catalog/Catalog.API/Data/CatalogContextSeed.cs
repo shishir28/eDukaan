@@ -6,80 +6,103 @@ namespace Catalog.API.Data
 {
     public class CatalogContextSeed
     {
-        public static void SeedData(IMongoCollection<Product> products)
+        public static void SeedData(IMongoCollection<CatalogCategory> catalogCategories,
+            IMongoCollection<CatalogBrand> catalogBrands,
+            IMongoCollection<CatalogDiscount> catalogDiscounts,
+            IMongoCollection<CatalogItem> catalogItems)
         {
-            var existProducts = products.Find(p => true).ToList().Any();
-            if (!existProducts)
-            {
-                products.InsertManyAsync(GetPreconfiguredProducts());
-            }
+            var existingCatalogCategories = catalogCategories.Find(p => true).ToList().Any();
+
+            if (!existingCatalogCategories)
+                catalogCategories.InsertManyAsync(GetPreconfiguredCatalogTypes());
+
+
+            var existingCatalogBrands = catalogBrands.Find(p => true).ToList().Any();
+
+            if (!existingCatalogBrands)
+                catalogBrands.InsertManyAsync(GetPreconfiguredCatalogBrands());
+
+
+            var existingCatalogDiscounts = catalogDiscounts.Find(p => true).ToList().Any();
+
+            if (!existingCatalogDiscounts)
+                catalogDiscounts.InsertManyAsync(GetPreconfiguredCatalogDiscounts());
+
+
+            var existingItems = catalogItems.Find(p => true).ToList().Any();
+
+            if (!existingItems)
+                catalogItems.InsertManyAsync(GetPreconfiguredProducts());
 
         }
 
-        private static IEnumerable<Product> GetPreconfiguredProducts()
+
+        private static IEnumerable<CatalogBrand> GetPreconfiguredCatalogBrands()
         {
-            return new List<Product>()
+            return new List<CatalogBrand>()
             {
-                new Product()
+                new CatalogBrand() { Code = "armani",Name = "Armani" },
+                new CatalogBrand() { Code = "versace", Name = "House Of Versace" },
+                new CatalogBrand() { Code = "prada", Name = "Prada" },
+                new CatalogBrand() { Code = "gucci", Name = "GUCCI" },
+                new CatalogBrand() { Code = "fendi", Name = "Fendi" },
+                new CatalogBrand() { Code = "nmike", Name = "Nike" },
+                new CatalogBrand() { Code = "puma", Name = "Puma" },
+                new CatalogBrand() { Code = "mn", Name = "New Balance" },
+                new CatalogBrand() { Code = "underarmour", Name = "Under Armour" },
+            };
+        }
+
+        private static IEnumerable<CatalogCategory> GetPreconfiguredCatalogTypes()
+        {
+            return new List<CatalogCategory>()
+            {
+                new CatalogCategory() { Code = "sportswear", Name="Sportswear", LocaleCode="en"},
+                new CatalogCategory() { Code = "mens",  Name = "Mens", LocaleCode="en" },
+                new CatalogCategory() { Code = "womens",Name = "Womens" , LocaleCode="en"},
+                new CatalogCategory() { Code = "kids", Name = "Kids" , LocaleCode="en"},
+                new CatalogCategory() { Code = "fashion", Name = "Fashion" , LocaleCode="en"},
+                new CatalogCategory() { Code = "households", Name = "HouseHolds" , LocaleCode="en"},
+                new CatalogCategory() { Code = "interiors", Name = "Interiors" , LocaleCode="en"},
+                new CatalogCategory() { Code = "clothing", Name = "Clothing", LocaleCode="en" },
+                new CatalogCategory() { Code = "bags", Name = "Bags" , LocaleCode="en"},
+                new CatalogCategory() { Code = "shoes", Name = "Shoes", LocaleCode="en"},
+            };
+        }
+
+        private static IEnumerable<CatalogDiscount> GetPreconfiguredCatalogDiscounts()
+        {
+            return new List<CatalogDiscount>()
+            {
+                new CatalogDiscount() {
+                    Code = "seasonal",
+                    Description="Season Discount",
+                    Percent=20, IsActive= false},
+
+                new CatalogDiscount() {
+                    Code = "weekly",
+                    Description="Weekly Discount",
+                    Percent= 10, IsActive= true},
+
+            };
+        }
+
+
+        private static IEnumerable<CatalogItem> GetPreconfiguredProducts()
+        {
+            return new List<CatalogItem>()
+            {
+                new CatalogItem()
                 {
-                    Id = "602d2149e773f2a3990b47f5",
-                    Name = "IPhone X",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-1.png",
-                    Price = 950.00M,
-                    Category = "Smart Phone"
+                    Name = "PumaMenScuderiaFerrari",
+                    Summary = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
+                    Description = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
+                    ImageFileName = "PumaMenScuderiaFerrari.jpg",
+                    Price = 140.00M,
+                    CategoryCode = "sportswear",
+                    BrandCode = "puma"
                 },
-                new Product()
-                {
-                    Id = "602d2149e773f2a3990b47f6",
-                    Name = "Samsung 10",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-2.png",
-                    Price = 840.00M,
-                    Category = "Smart Phone"
-                },
-                new Product()
-                {
-                    Id = "602d2149e773f2a3990b47f7",
-                    Name = "Huawei Plus",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-3.png",
-                    Price = 650.00M,
-                    Category = "White Appliances"
-                },
-                new Product()
-                {
-                    Id = "602d2149e773f2a3990b47f8",
-                    Name = "Xiaomi Mi 9",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-4.png",
-                    Price = 470.00M,
-                    Category = "White Appliances"
-                },
-                new Product()
-                {
-                    Id = "602d2149e773f2a3990b47f9",
-                    Name = "HTC U11+ Plus",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-5.png",
-                    Price = 380.00M,
-                    Category = "Smart Phone"
-                },
-                new Product()
-                {
-                    Id = "602d2149e773f2a3990b47fa",
-                    Name = "LG G7 ThinQ",
-                    Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
-                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-6.png",
-                    Price = 240.00M,
-                    Category = "Home Kitchen"
-                }
+               
             };
         }
     }

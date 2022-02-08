@@ -1,0 +1,8 @@
+﻿.form-control {
+  width: 99% !important;
+}
+
+.login-form {
+  max-width: 30em;
+  margin: auto;
+}

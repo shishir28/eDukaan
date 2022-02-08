@@ -6,7 +6,9 @@ namespace Catalog.API.Data
 {
     public interface ICatalogContext
     {
-        IMongoCollection<Product> Products { get; }
-
+        IMongoCollection<CatalogItem> CatalogItems { get; }
+        IMongoCollection<CatalogBrand> CatalogBrands { get; }
+        IMongoCollection<CatalogCategory> CatalogCategories { get; }
+        IMongoCollection<CatalogDiscount> CatalogDiscounts { get; }
     }
 }

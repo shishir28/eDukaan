@@ -1,18 +1,25 @@
 ﻿@model CatalogModel
 
-<div class="card">
-    <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.ImageFile" alt=""></a>
-    <div class="card-body">
-        <h4 class="card-title"><a asp-page="ProductDetail" asp-route-productId="@Model.Id" class="color-main">@Model.Name</a></h4>
-        <p class="card-text">@Model.Summary</p>
-        <div class="row">
-            <div class="col">
-                <p class="btn btn-danger btn-block">@Model.Price $</p>
-            </div>
-            <div class="col">
+<div class="product-image-wrapper">
+    <div class="single-products">
+        <div class="productinfo text-center">
+            @* <img src="images/shop/product12.jpg" alt="" />*@
+            <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.ImageFileName" alt=""></a>
+            <h2>$@Model.Price</h2>
+            <p>@Model.Name</p>
+            <a href="#" class="btn btn-default add-to-cart">
+                <i class="fa fa-shopping-cart"></i>Add to cart
+                <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
+                    <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to Cart</a>
+                    <input type="hidden" asp-for="@Model.Id" name="productId" />
+                </form>
 
-                @*<a asp-page="Cart" asp-route-productId="@Model.Id" class="btn btn-success btn-block">Add to Cart</a>*@
-
+            </a>
+        </div>
+        <div class="product-overlay">
+            <div class="overlay-content">
+                <h2>$@Model.Price</h2>
+                <p>@Model.Name</p>
                 <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
                     <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to Cart</a>
                     <input type="hidden" asp-for="@Model.Id" name="productId" />
@@ -21,4 +28,26 @@
             </div>
         </div>
     </div>
+    <div class="choose">
+        <ul class="nav nav-pills nav-justified">
+            <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+            <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+        </ul>
+    </div>
+
+
+    @* <div class="card-body">
+        <h4 class="card-title"><a asp-page="ProductDetail" asp-route-productId="@Model.Id" class="color-main">@Model.Name</a></h4>
+        <p class="card-text">@Model.Summary</p>
+        <div class="row">
+        <div class="col">
+        <p class="btn btn-danger btn-block">@Model.Price $</p>
+        </div>
+        <div class="col">
+
+        <a asp-page="Cart" asp-route-productId="@Model.Id" class="btn btn-success btn-block">Add to Cart</a>
+
+        </div>
+        </div>
+        </div>*@
 </div>

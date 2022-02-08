@@ -14,6 +14,9 @@
 
         public IEnumerable<string> CategoryList { get; set; } = new List<string>();
         public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
+        public IEnumerable<CatalogBrandModel> ProductBrandList { get; set; } = new List<CatalogBrandModel>();
+        public IEnumerable<CatalogCategoryModel> ProductCategoryList { get; set; } = new List<CatalogCategoryModel>();
+
 
 
         [BindProperty(SupportsGet = true)]
@@ -22,16 +25,18 @@
         public async Task<IActionResult> OnGetAsync(string categoryName)
         {
             var productList = await _catalogServcie.GetCatalog();
-            CategoryList = productList.Select(p => p.Category).ToList();
+            //CategoryList = productList.Select(p => p.Category).ToList();
 
-            if (!string.IsNullOrWhiteSpace(categoryName))
-            {
-                ProductList = productList.Where(p => p.Category == categoryName);
-                SelectedCategory = categoryName;
-            }
-            else
+            //if (!string.IsNullOrWhiteSpace(categoryName))
+            //{
+            //    ProductList = productList.Where(p => p.Category == categoryName);
+            //    SelectedCategory = categoryName;
+            //}
+            //else
             {
                 ProductList = productList;
+                ProductBrandList = await _catalogServcie.GetCatalogBrand();
+                ProductCategoryList = await _catalogServcie.GetCatalogCategory();           
             }
 
             return Page();

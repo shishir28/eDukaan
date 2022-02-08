@@ -11,17 +11,24 @@ namespace Catalog.API.Controllers
     {
         private readonly ILogger<CatalogController> _logger;
         private readonly IProductRepository _productRepository;
+        private readonly IProductBrandRepository _productBrandRepository;
+        private readonly IProductCategoryRepository _productCategoryRepository;
 
-        public CatalogController(IProductRepository productRepository, ILogger<CatalogController> logger)
+        public CatalogController(IProductRepository productRepository,
+            IProductBrandRepository productBrandRepository,
+            IProductCategoryRepository productCategoryRepository,
+            ILogger<CatalogController> logger)
         {
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _productBrandRepository = productBrandRepository ?? throw new ArgumentNullException(nameof(productBrandRepository));
+            _productCategoryRepository = productCategoryRepository ?? throw new ArgumentNullException(nameof(productCategoryRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogItem>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<CatalogItem>>> GetProducts()
         {
             try
             {
@@ -34,11 +41,45 @@ namespace Catalog.API.Controllers
             }
         }
 
+
+        [HttpGet("brands")]        
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogBrand>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<CatalogBrand>>> GetProductBrands()
+        {
+            try
+            {
+                return Ok(await _productBrandRepository.GetProductBrands());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet("categories")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogCategory>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<CatalogCategory>>> GetProductCategories()
+        {
+            try
+            {
+                return Ok(await _productCategoryRepository.GetProductCategories());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
+
+
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Product>> GetProductById(string id)
+        public async Task<ActionResult<CatalogItem>> GetProductById(string id)
         {
             try
             {
@@ -56,10 +97,10 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet("[action]/{category}", Name = "GetProductByCategory")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogItem>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string category)
+        public async Task<ActionResult<IEnumerable<CatalogItem>>> GetProductByCategory(string category)
         {
             try
             {
@@ -77,10 +118,10 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet("[action]/{name}", Name = "GetProductByName")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogItem>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByName(string name)
+        public async Task<ActionResult<IEnumerable<CatalogItem>>> GetProductByName(string name)
         {
             try
             {
@@ -98,9 +139,9 @@ namespace Catalog.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Product))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CatalogItem))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
+        public async Task<ActionResult<CatalogItem>> CreateProduct([FromBody] CatalogItem product)
         {
             try
             {
@@ -117,7 +158,7 @@ namespace Catalog.API.Controllers
         [HttpPut("{id:length(24)}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateProduct([FromBody] Product product)
+        public async Task<IActionResult> UpdateProduct([FromBody] CatalogItem product)
         {
             try
             {

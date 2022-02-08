@@ -15,39 +15,46 @@ namespace Catalog.API.UnitTests
     {
         private readonly Mock<ILogger<CatalogController>> _mockLogger;
         private readonly Mock<IProductRepository> _mockProductRepository;
+        private readonly Mock<IProductBrandRepository> _mockProductBrandRepository;
+        private readonly Mock<IProductCategoryRepository> _mockProductCategoryRepository;
+
         private CatalogController _sut;
 
         public CatalogControllerShould()
         {
             _mockProductRepository = new Mock<IProductRepository>();
+            _mockProductBrandRepository = new Mock<IProductBrandRepository>();
+            _mockProductCategoryRepository = new Mock<IProductCategoryRepository>();
+
             _mockLogger = new Mock<ILogger<CatalogController>>();
             this.IntialieCatalogController();
         }
 
 
-        private void IntialieCatalogController() => this._sut = new CatalogController(_mockProductRepository.Object, _mockLogger.Object);
+        private void IntialieCatalogController() => this._sut = new CatalogController(_mockProductRepository.Object,
+            _mockProductBrandRepository.Object,
+            _mockProductCategoryRepository.Object,
+            _mockLogger.Object);
 
-        private List<Product> DesiredProductList => new List<Product>()
+        private List<CatalogItem> DesiredProductList => new List<CatalogItem>()
             {
-                new Product()
+                new CatalogItem()
                 {
                     Id = "602d2149e773f2a3990b47f5",
                     Name = "IPhone X",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-1.png",
+                    ImageFileName = "product-1.png",
                     Price = 950.00M,
-                    Category = "Smart Phone"
                 },
-                new Product()
+                new CatalogItem()
                 {
                     Id = "602d2149e773f2a3990b47f6",
                     Name = "Samsung 10",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFile = "product-2.png",
+                    ImageFileName = "product-2.png",
                     Price = 840.00M,
-                    Category = "Smart Phone"
                 }
             };
 
@@ -65,11 +72,11 @@ namespace Catalog.API.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var okResult = response.Result as OkObjectResult;
             Assert.Equal(200, okResult.StatusCode.Value);
 
-            var returnedProductList = Assert.IsType<List<Product>>(okResult.Value);
+            var returnedProductList = Assert.IsType<List<CatalogItem>>(okResult.Value);
             Assert.Equal(2, returnedProductList.Count);
             Assert.Equal("IPhone X", returnedProductList.FirstOrDefault().Name);
 
@@ -87,7 +94,7 @@ namespace Catalog.API.UnitTests
             // Act
             var result = await this._sut.GetProducts();
 
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var objResult = response.Result as ObjectResult;
 
             // Assert
@@ -99,7 +106,7 @@ namespace Catalog.API.UnitTests
         {
             // Arrange
             var productId = "602d2149e773f2a3990b47f5";
-            _mockProductRepository.Setup(x => x.GetProductById(It.IsAny<string>())).ReturnsAsync((Product)null);
+            _mockProductRepository.Setup(x => x.GetProductById(It.IsAny<string>())).ReturnsAsync((CatalogItem)null);
 
             this.IntialieCatalogController();
 
@@ -126,10 +133,10 @@ namespace Catalog.API.UnitTests
 
             // Assert 
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<Product>>(result);
+            var response = Assert.IsType<ActionResult<CatalogItem>>(result);
             var okResult = response.Result as OkObjectResult;
             Assert.Equal(200, okResult.StatusCode.Value);
-            var returnedProduct = Assert.IsType<Product>(okResult.Value);
+            var returnedProduct = Assert.IsType<CatalogItem>(okResult.Value);
             Assert.Equal(desiredProduct.Name, returnedProduct.Name);
 
         }
@@ -148,7 +155,7 @@ namespace Catalog.API.UnitTests
 
             // Assert 
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<Product>>(result);
+            var response = Assert.IsType<ActionResult<CatalogItem>>(result);
             var objResult = response.Result as ObjectResult;
             Assert.Equal(500, objResult.StatusCode.Value);
         }
@@ -168,11 +175,11 @@ namespace Catalog.API.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var okResult = response.Result as OkObjectResult;
             Assert.Equal(200, okResult.StatusCode.Value);
 
-            var returnedProductList = Assert.IsType<List<Product>>(okResult.Value);
+            var returnedProductList = Assert.IsType<List<CatalogItem>>(okResult.Value);
             Assert.Equal(2, returnedProductList.Count);
             Assert.Equal("IPhone X", returnedProductList.FirstOrDefault().Name);
 
@@ -183,7 +190,7 @@ namespace Catalog.API.UnitTests
         public async Task GetProductByCategoryReturnNotFound()
         {
             // Arrange
-            _mockProductRepository.Setup(x => x.GetProductsByCategory(It.IsAny<string>())).ReturnsAsync((List<Product>)null);
+            _mockProductRepository.Setup(x => x.GetProductsByCategory(It.IsAny<string>())).ReturnsAsync((List<CatalogItem>)null);
 
             this.IntialieCatalogController();
 
@@ -209,7 +216,7 @@ namespace Catalog.API.UnitTests
             // Act
             var result = await _sut.GetProductByCategory("Smart Phone");
 
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var objResult = response.Result as ObjectResult;
 
             // Assert
@@ -232,11 +239,11 @@ namespace Catalog.API.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var okResult = response.Result as OkObjectResult;
             Assert.Equal(200, okResult.StatusCode.Value);
 
-            var returnedProductList = Assert.IsType<List<Product>>(okResult.Value);
+            var returnedProductList = Assert.IsType<List<CatalogItem>>(okResult.Value);
             Assert.Equal(2, returnedProductList.Count);
             Assert.Equal("IPhone X", returnedProductList.FirstOrDefault().Name);
 
@@ -247,7 +254,7 @@ namespace Catalog.API.UnitTests
         public async Task GetProductByNameReturnNotFound()
         {
             // Arrange
-            _mockProductRepository.Setup(x => x.GetProductsByName(It.IsAny<string>())).ReturnsAsync((List<Product>)null);
+            _mockProductRepository.Setup(x => x.GetProductsByName(It.IsAny<string>())).ReturnsAsync((List<CatalogItem>)null);
 
             this.IntialieCatalogController();
 
@@ -273,7 +280,7 @@ namespace Catalog.API.UnitTests
             // Act
             var result = await _sut.GetProductByName("Smart Phone");
 
-            var response = Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+            var response = Assert.IsType<ActionResult<IEnumerable<CatalogItem>>>(result);
             var objResult = response.Result as ObjectResult;
 
             // Assert
@@ -286,7 +293,7 @@ namespace Catalog.API.UnitTests
             // Arrange
             var product = DesiredProductList[0];
 
-            _mockProductRepository.Setup(x => x.Create(It.IsAny<Product>())).Returns(Task.CompletedTask);
+            _mockProductRepository.Setup(x => x.Create(It.IsAny<CatalogItem>())).Returns(Task.CompletedTask);
 
             this.IntialieCatalogController();
 
@@ -295,11 +302,11 @@ namespace Catalog.API.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<Product>>(result);
+            var response = Assert.IsType<ActionResult<CatalogItem>>(result);
             var createResult = response.Result as CreatedAtRouteResult;
             Assert.Equal(201, createResult.StatusCode.Value);
 
-            var returnedProduct = Assert.IsType<Product>(createResult.Value);
+            var returnedProduct = Assert.IsType<CatalogItem>(createResult.Value);
             Assert.Equal(product.Name, returnedProduct.Name);
 
         }
@@ -310,7 +317,7 @@ namespace Catalog.API.UnitTests
             // Arrange
             var product = DesiredProductList[0];
 
-            _mockProductRepository.Setup(x => x.Create(It.IsAny<Product>())).ThrowsAsync(new System.Exception());
+            _mockProductRepository.Setup(x => x.Create(It.IsAny<CatalogItem>())).ThrowsAsync(new System.Exception());
 
             this.IntialieCatalogController();
 
@@ -319,7 +326,7 @@ namespace Catalog.API.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            var response = Assert.IsType<ActionResult<Product>>(result);
+            var response = Assert.IsType<ActionResult<CatalogItem>>(result);
             var objResult = response.Result as ObjectResult;
             Assert.Equal(500, objResult.StatusCode.Value);
         }
@@ -330,7 +337,7 @@ namespace Catalog.API.UnitTests
             // Arrange
             var product = DesiredProductList[0];
 
-            _mockProductRepository.Setup(x => x.Update(It.IsAny<Product>())).ReturnsAsync(true);
+            _mockProductRepository.Setup(x => x.Update(It.IsAny<CatalogItem>())).ReturnsAsync(true);
 
             this.IntialieCatalogController();
 
@@ -350,7 +357,7 @@ namespace Catalog.API.UnitTests
             // Arrange
             var product = DesiredProductList[0];
 
-            _mockProductRepository.Setup(x => x.Update(It.IsAny<Product>())).ThrowsAsync(new System.Exception());
+            _mockProductRepository.Setup(x => x.Update(It.IsAny<CatalogItem>())).ThrowsAsync(new System.Exception());
 
             this.IntialieCatalogController();
 
