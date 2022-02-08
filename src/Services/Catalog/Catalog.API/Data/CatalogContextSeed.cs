@@ -94,7 +94,8 @@ namespace Catalog.API.Data
             {
                 new CatalogItem()
                 {
-                    Name = "PumaMenScuderiaFerrari",
+                    Code = "PumaMenScuderiaFerrari",
+                    Name = "Puma Men Scuderia Ferrari",
                     Summary = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
                     Description = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
                     ImageFileName = "PumaMenScuderiaFerrari.jpg",
