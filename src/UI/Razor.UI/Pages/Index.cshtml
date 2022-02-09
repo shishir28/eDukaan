@@ -4,146 +4,68 @@
     ViewData["Title"] = "Home page";
 }
 
-<section id="slider"><!--slider-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">
-					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class=""></li>
-							<li data-target="#slider-carousel" data-slide-to="1" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="2" class=""></li>
-						</ol>
-						
-						<div class="carousel-inner">
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="images/home/girl1.jpg" class="girl img-responsive" alt="">
-									<img src="images/home/pricing.png" class="pricing" alt="">
-								</div>
-							</div>
-							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="images/home/girl2.jpg" class="girl img-responsive" alt="">
-									<img src="images/home/pricing.png" class="pricing" alt="">
-								</div>
-							</div>
-							
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="images/home/girl3.jpg" class="girl img-responsive" alt="">
-									<img src="images/home/pricing.png" class="pricing" alt="">
-								</div>
-							</div>
-							
-						</div>
-						
-						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</section>
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class=""></li>
+                        <li data-target="#slider-carousel" data-slide-to="1" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2" class=""></li>
+                    </ol>
 
-@*<div class="container">
-    <div class="row">
-        <div class="col">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="~/images/banner/banner1.png" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="~/images/banner/banner2.png" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="~/images/banner/banner3.png" alt="Second slide">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-
-        <partial name="_TopProductPartial" model="Model.ProductList.FirstOrDefault()" />       
-
-    </div>
-</div>*@
-@*
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-header bg-primary text-white text-uppercase">
-                    <i class="fa fa-star"></i> Last products
-                </div>
-                <div class="card-body">
-                    <div class="row">
-
-                        @foreach (var product in Model.ProductList.Take(4))
-                        {
-                            <div class="col-sm">
-                                <partial name="_ProductItemPartial" model="@product" />
+                    <div class="carousel-inner">
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free E-Commerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
-                        }
+                            <div class="col-sm-6">
+                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="">
+                                <img src="images/home/pricing.png" class="pricing" alt="">
+                            </div>
+                        </div>
+                        <div class="item active">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>100% Responsive Design</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl2.jpg" class="girl img-responsive" alt="">
+                                <img src="images/home/pricing.png" class="pricing" alt="">
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free Ecommerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl3.jpg" class="girl img-responsive" alt="">
+                                <img src="images/home/pricing.png" class="pricing" alt="">
+                            </div>
+                        </div>
 
                     </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>
-</div>
-
-<div class="container mt-3 mb-4">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-header bg-primary text-white text-uppercase">
-                    <i class="fa fa-trophy"></i> Best products
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        
-                            @foreach (var product in Model.ProductList.TakeLast(4))
-                            {
-                                <div class="col-sm">
-                                    <partial name="_ProductItemPartial" model="@product" />
-                                </div>
-                            }
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
+</section>
