@@ -12,14 +12,31 @@
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
+        public IEnumerable<string> CategoryList { get; set; } = new List<string>();
         public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
+        public IEnumerable<CatalogBrandModel> ProductBrandList { get; set; } = new List<CatalogBrandModel>();
+        public IEnumerable<CatalogCategoryModel> ProductCategoryList { get; set; } = new List<CatalogCategoryModel>();
 
-        public async Task<IActionResult> OnGetAsync()
+
+        public async Task<IActionResult> OnGetAsync(string categoryName)
         {
-            ProductList = await _catalogServcie.GetCatalog();
+            var productList = await _catalogServcie.GetCatalog();
+            //CategoryList = productList.Select(p => p.Category).ToList();
+
+            //if (!string.IsNullOrWhiteSpace(categoryName))
+            //{
+            //    ProductList = productList.Where(p => p.Category == categoryName);
+            //    SelectedCategory = categoryName;
+            //}
+            //else
+            {
+                ProductList = productList;
+                ProductBrandList = await _catalogServcie.GetCatalogBrand();
+                ProductCategoryList = await _catalogServcie.GetCatalogCategory();
+            }
+
             return Page();
         }
-
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
             var product = await _catalogServcie.GetCatalog(productId);
