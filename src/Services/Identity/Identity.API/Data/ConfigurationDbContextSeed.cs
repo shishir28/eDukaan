@@ -10,14 +10,16 @@ namespace Identity.API.Data
         public async Task SeedAsync(ConfigurationDbContext context, IConfiguration configuration)
         {
             //callbacks urls from config:
-            var clientUrls = new Dictionary<string, string>();
-
-            clientUrls.Add("razor", configuration.GetValue<string>("RazorClient"));
-            //clientUrls.Add("CatalogApi", configuration.GetValue<string>("CatalogApiClient"));
-            clientUrls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));            
-            clientUrls.Add("DiscountApi", configuration.GetValue<string>("DiscountApiClient"));            
-            clientUrls.Add("OrderingApi", configuration.GetValue<string>("OrderingApiClient"));            
-            clientUrls.Add("WebShoppingAgg", configuration.GetValue<string>("OrderApiClient"));
+            var clientUrls = new Dictionary<string, string>
+            {
+                { "razor", configuration.GetValue<string>("RazorClient") },
+                //clientUrls.Add("CatalogApi", configuration.GetValue<string>("CatalogApiClient"));
+                { "BasketApi", configuration.GetValue<string>("BasketApiClient") },
+                { "DiscountApi", configuration.GetValue<string>("DiscountApiClient") },
+                { "OrderingApi", configuration.GetValue<string>("OrderingApiClient") },
+                { "UserApi", configuration.GetValue<string>("UserApiClient") },
+                { "WebShoppingAgg", configuration.GetValue<string>("OrderApiClient") }
+            };
 
             if (!context.Clients.Any())
             {
@@ -26,7 +28,6 @@ namespace Identity.API.Data
 
                 await context.SaveChangesAsync();
             }
-
             else
             {
                 List<ClientRedirectUri> oldRedirects = (await context.Clients.Include(c => c.RedirectUris).ToListAsync())

@@ -82,6 +82,7 @@ services:
       - "BasketApiClient=http://basket.api"  
       - "DiscountApiClient=http://discount.api"  
       - "OrderingApiClient=http://order.api"  
+      - "UserApiClient=http://user.api"  
       - "WebShoppingAgg=http://shopping.aggregator"  
       - "IssuerUri=http://identity.api"  
       - "UseCustomizationData=false"  
@@ -161,6 +162,14 @@ services:
     ports:
       - "8005:80"
   
+  user.api:
+    container_name: user.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
+      - "IdentityUrl=http://identity.api"  
+    ports:
+      - "8006:80"
   ocelotapigw:
     container_name: ocelotapigw
     environment:

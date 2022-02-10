@@ -7,6 +7,7 @@
         public string BasketApiClient { get; set; }
         public string DiscountApiClient { get; set; }
         public string OrderingApiClient { get; set; }
+        public string UserApiClient { get; set; }
         public string WebShoppingAgg { get; set; }
         public bool UseCustomizationData { get; set; }
         public string TokenLifetimeMinutes { get; set; }

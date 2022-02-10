@@ -15,6 +15,7 @@ namespace Identity.API.Configuration
                 new ApiScope("basket", "Basket Service"),
                 new ApiScope("discount", "Discount Service"),
                 new ApiScope("orders", "Orders Service"),
+                new ApiScope("user", "User Service"),
                 new ApiScope("webshoppingagg", "Web Shopping Aggregator")
             };
         }
@@ -63,6 +64,7 @@ namespace Identity.API.Configuration
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         "orders",
                         "basket",
+                        "user",
                         "webshoppingagg",
                     },
                     AccessTokenLifetime = 60*60*2, // 2 hours
@@ -79,6 +81,19 @@ namespace Identity.API.Configuration
                     AllowedScopes =
                     {
                         "basket"
+                    }
+                },
+                 new Client
+                {
+                    ClientId = "userswaggerui",
+                    ClientName = "User Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = { $"{clientsUrl["UserApi"]}/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"{clientsUrl["UserApi"]}/swagger/" },
+                    AllowedScopes =
+                    {
+                        "user"
                     }
                 },
                 new Client
