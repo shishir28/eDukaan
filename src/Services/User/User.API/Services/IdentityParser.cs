@@ -7,13 +7,6 @@ namespace User.API.Services
     public class IdentityParser : IIdentityParser<ApplicationUser>
     {
 
-        private readonly ILogger<IdentityParser> _logger;
-
-
-        public IdentityParser( ILogger<IdentityParser> logger)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
         public ApplicationUser Parse(IPrincipal principal)
         {
             // Pattern matching 'is' expression
@@ -43,13 +36,6 @@ namespace User.API.Services
                      ZipCode = claims.Claims.FirstOrDefault(x => x.Type == "address_zip_code")?.Value ?? ""
                  };
 
-                //foreach (var item in claims.Claims)
-                //    dic[item.Type] = item.Value;
-
-                //var opt = new JsonSerializerOptions() { WriteIndented = true };
-                //string strJson = System.Text.Json.JsonSerializer.Serialize<Dictionary<string, string>>(dic, opt);
-
-                //_logger?.LogInformation(strJson);
                 return result;
 
             }

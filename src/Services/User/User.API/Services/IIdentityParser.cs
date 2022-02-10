@@ -1,5 +1,4 @@
 ﻿using System.Security.Principal;
-using User.API.Models;
 
 namespace User.API.Services
 {

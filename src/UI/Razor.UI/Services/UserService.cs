@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json;
-
+﻿
 namespace Razor.UI.Services
 {
     public class UserService : IUserService
@@ -23,12 +21,7 @@ namespace Razor.UI.Services
             {
                 _logger?.LogInformation(await response.Content.ReadAsStringAsync());
                 var result = await response.ReadContentAs<ApplicationUserModel>();
-                _logger.LogInformation("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                var opt = new JsonSerializerOptions() { WriteIndented = true };
-                string strJson = System.Text.Json.JsonSerializer.Serialize<ApplicationUserModel>(result, opt);
 
-                _logger?.LogInformation(strJson);
-                _logger.LogInformation("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 return result;
             }
             catch (Exception ex)
