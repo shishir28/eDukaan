@@ -39,6 +39,7 @@ namespace Razor.UI.Extensions
                options.Scope.Add("offline_access");
                options.Scope.Add("orders");
                options.Scope.Add("basket");
+               options.Scope.Add("user");
                options.Scope.Add("webshoppingagg");
                options.CallbackPath = "/signin-oidc";
            });

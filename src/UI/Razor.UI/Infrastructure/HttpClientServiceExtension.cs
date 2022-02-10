@@ -22,6 +22,9 @@
             services.AddHttpClient<IOrderService, OrderService>(c => c.BaseAddress = new Uri(configuration["ApiSettings:GatewayAddress"]))
                   .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
+            services.AddHttpClient<IUserService, UserService>(c => c.BaseAddress = new Uri(configuration["ApiSettings:GatewayAddress"]))
+                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
 
             //add custom application services
             //services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();

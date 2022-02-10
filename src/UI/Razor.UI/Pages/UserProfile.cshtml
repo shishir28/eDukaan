@@ -1,0 +1,60 @@
+﻿@page
+@model UserProfileModel
+@{
+    ViewData["Title"] = "Profile page";
+}
+
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Name:</label>
+                <span>@Model.UserDetail.CardHolderName</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Last Name:</label>
+                <span>@Model.UserDetail.LastName</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Address:</label>
+                <span>@Model.UserDetail.Street</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">City:</label>
+                <span>@Model.UserDetail.City</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">State:</label>
+                <span>@Model.UserDetail.State</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Country:</label>
+                <span>@Model.UserDetail.Country</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Post Code:</label>
+                <span>@Model.UserDetail.ZipCode</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Phone Number:</label>
+                <span>@Model.UserDetail.PhoneNumber</span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Card Number:</label>
+                <span>@Model.UserDetail.CardNumber</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Cardholder Name:</label>
+                <span>@Model.UserDetail.CardHolderName</span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label form-label">Expiration Date:</label>
+                <span>@Model.UserDetail.Expiration</span>
+            </div>
+
+        </div>
+    </div>
+</section>
