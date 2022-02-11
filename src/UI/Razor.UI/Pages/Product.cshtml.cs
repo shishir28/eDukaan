@@ -36,7 +36,7 @@
             {
                 ProductList = productList;
                 ProductBrandList = await _catalogServcie.GetCatalogBrand();
-                ProductCategoryList = await _catalogServcie.GetCatalogCategory();           
+                ProductCategoryList = await _catalogServcie.GetCatalogCategory();
             }
 
             return Page();
@@ -46,8 +46,7 @@
         {
 
             var product = await _catalogServcie.GetCatalog(productId);
-            var userName = "skm";
-            var basket = await _basketService.GetBasket(userName);
+            var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
 
             basket.Items.Add(
               new BasketItemModel
@@ -60,7 +59,6 @@
               });
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
-
             return RedirectToPage("Cart");
         }
     }

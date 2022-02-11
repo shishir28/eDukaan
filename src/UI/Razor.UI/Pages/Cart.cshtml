@@ -20,47 +20,57 @@
 <div class="container mb-4">
     <div class="row">
         <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
                     <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Available</th>
-                            <th scope="col" class="text-center">Quantity</th>
-                            <th scope="col" class="text-right">Price</th>
-                            <th> </th>
+                        <tr class="cart_menu">
+                            <td class="image">Item</td>
+                            <td class="description"></td>
+                            <td class="price">Price</td>
+                            <td class="quantity">Quantity</td>
+                            <td class="total">Total</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach (var cartItem in Model.Cart.Items)
                         {
-                                <tr>
-                                    <td><img src="https://dummyimage.com/50x50/55595c/fff" /></td>
-                                    <td>@cartItem.ProductName</td>
-                                    <td>In stock</td>
-                                    <td><input class="form-control" type="text" value="@cartItem.Quantity" /></td>
-                                    <td class="text-right">@(cartItem.Price * cartItem.Quantity) $</td>
-                                    <td class="text-right">
+                            <tr>
+                                <td class="cart_product">
+                                    <a href=""><img src="images/cart/one.png" alt=""></a>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="">@cartItem.ProductName</a></h4>
+                                    @* <p>Web ID: 1089772</p> *@
+                                </td>
 
-                                        <form asp-page-handler="removetocart" method="post">
-                                            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                            <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
-                                        </form>
+                                <td class="cart_price">
+                                    <p>$@(cartItem.Price * cartItem.Quantity)</p>
+                                </td>
 
-                                    </td>
-                                </tr>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        <a class="cart_quantity_up" href=""> + </a>
+                                        <input class="cart_quantity_input" type="text" name="quantity"
+                                        value="@cartItem.Quantity" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down" href=""> - </a>
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">$@(cartItem.Price * cartItem.Quantity)</p>
+                                </td>
+                                <td class="cart_delete">
+
+                                    <form asp-page-handler="removetocart" method="post">
+                                        <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                        <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
+                                    </form>
+
+                                </td>
+                            </tr>
                         }
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>@Model.Cart.TotalPrice $</strong></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -79,4 +89,3 @@
         </div>
     </div>
 </div>
-

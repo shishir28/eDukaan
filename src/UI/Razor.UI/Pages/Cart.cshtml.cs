@@ -15,15 +15,15 @@
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = "skm";
+            var userName = this.HttpContext.User.Identity.Name;
             var basket = await _basketService.GetBasket(userName);
             return Page();
         }
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
         {
-            var userName = "swn";
-            var basket = await _basketService.GetBasket(userName);
+            var userName = this.HttpContext.User.Identity.Name;
+            var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
 
             var item = basket.Items.Single(x => x.ProductId == productId);
             basket.Items.Remove(item);

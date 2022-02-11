@@ -37,10 +37,13 @@
 
             return Page();
         }
+
+
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
             var product = await _catalogServcie.GetCatalog(productId);
-            var userName = "skm";
+            var userName = "swn";
+
             var basket = await _basketService.GetBasket(userName);
 
             basket.Items.Add(
