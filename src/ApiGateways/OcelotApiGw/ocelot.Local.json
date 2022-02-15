@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8001"
+          "Port": "5001"
         }
       ],
       "UpstreamPathTemplate": "/Catalog",
@@ -25,7 +25,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8001
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/{id}",
@@ -41,7 +41,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8001
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
@@ -55,7 +55,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8001
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByName/{name}",
@@ -73,7 +73,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8002
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/Basket",
@@ -91,7 +91,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8002
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/Basket/{userName}",
@@ -110,7 +110,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8002
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/Basket/Checkout",
@@ -135,7 +135,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8003
+          "Port": 5003
         }
       ],
       "UpstreamPathTemplate": "/Discount",
@@ -154,7 +154,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8003
+          "Port": 5003
         }
       ],
       "UpstreamPathTemplate": "/Discount/{productName}",
@@ -173,7 +173,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 8005
+          "Port": 5005
         }
       ],
       "UpstreamPathTemplate": "/Order/{userName}",
