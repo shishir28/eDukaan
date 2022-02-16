@@ -44,7 +44,7 @@ namespace Catalog.API.UnitTests
                     Name = "IPhone X",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFileName = "product-1.png",
+                    //ImageFileName = "product-1.png",
                     Price = 950.00M,
                 },
                 new CatalogItem()
@@ -53,7 +53,7 @@ namespace Catalog.API.UnitTests
                     Name = "Samsung 10",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
-                    ImageFileName = "product-2.png",
+                    //ImageFileName = "product-2.png",
                     Price = 840.00M,
                 }
             };

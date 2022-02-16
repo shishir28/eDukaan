@@ -4,7 +4,7 @@
     <div class="single-products">
         <div class="productinfo text-center">
             @* <img src="images/shop/product12.jpg" alt="" />*@
-            <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.ImageFileName" alt=""></a>
+            <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.MediumImageURL" alt=""></a>
             <h2>$@Model.Price</h2>
             <p>@Model.Name</p>
             <a href="#" class="btn btn-default add-to-cart">

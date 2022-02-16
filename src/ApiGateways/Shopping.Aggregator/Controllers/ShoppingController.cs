@@ -32,10 +32,13 @@ namespace Shopping.Aggregator.Controllers
             {
                 var product = await _catalogService.GetCatalog(item.ProductId);
                 item.ProductName = product.Name;
-                item.Category = product.Category;
+                item.ParentCategoryCode = product.ParentCategoryCode;
+
                 item.Summary = product.Summary;
                 item.Description = product.Description;
-                item.ImageFile = product.ImageFile;
+                item.SmallImageURL = product.SmallImageURL;
+                item.MediumImageURL = product.MediumImageURL;
+                item.LargeImageURL = product.LargeImageURL;
             }
 
             // Get the orders for the user

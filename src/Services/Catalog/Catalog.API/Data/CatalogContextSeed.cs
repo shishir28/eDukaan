@@ -1,73 +1,47 @@
 
 using Catalog.API.Entities;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace Catalog.API.Data
 {
     public class CatalogContextSeed
     {
-        public static void SeedData(IMongoCollection<CatalogCategory> catalogCategories,
-            IMongoCollection<CatalogBrand> catalogBrands,
-            IMongoCollection<CatalogDiscount> catalogDiscounts,
-            IMongoCollection<CatalogItem> catalogItems)
+        public static void SeedData(IWebHostEnvironment env, IConfiguration config)
+
         {
+            var client = new MongoClient(config.GetValue<string>("DatabaseSettings:ConnectionString"));
+            var database = client.GetDatabase(config.GetValue<string>("DatabaseSettings:DatabaseName"));
+            var catalogItems = database.GetCollection<CatalogItem>(config.GetValue<string>("DatabaseSettings:ItemCollectionName"));
+            var catalogBrands = database.GetCollection<CatalogBrand>(config.GetValue<string>("DatabaseSettings:BrandCollectionName"));
+            var catalogCategories = database.GetCollection<CatalogCategory>(config.GetValue<string>("DatabaseSettings:CategoryCollectionName"));
+            var catalogDiscounts = database.GetCollection<CatalogDiscount>(config.GetValue<string>("DatabaseSettings:DiscountCollectionName"));
+
             var existingCatalogCategories = catalogCategories.Find(p => true).ToList().Any();
 
+            var catalogTuple = ParseCatalogData(env.ContentRootPath);
+
+
+            var existingItems = catalogItems.Find(p => true).ToList().Any();
+
+            if (!existingItems)
+                catalogItems.InsertManyAsync(catalogTuple.Item3);
+
             if (!existingCatalogCategories)
-                catalogCategories.InsertManyAsync(GetPreconfiguredCatalogTypes());
+                catalogCategories.InsertManyAsync(catalogTuple.Item1);
 
 
             var existingCatalogBrands = catalogBrands.Find(p => true).ToList().Any();
 
             if (!existingCatalogBrands)
-                catalogBrands.InsertManyAsync(GetPreconfiguredCatalogBrands());
+                catalogBrands.InsertManyAsync(catalogTuple.Item2);
 
 
             var existingCatalogDiscounts = catalogDiscounts.Find(p => true).ToList().Any();
 
             if (!existingCatalogDiscounts)
                 catalogDiscounts.InsertManyAsync(GetPreconfiguredCatalogDiscounts());
-
-
-            var existingItems = catalogItems.Find(p => true).ToList().Any();
-
-            if (!existingItems)
-                catalogItems.InsertManyAsync(GetPreconfiguredProducts());
-
-        }
-
-
-        private static IEnumerable<CatalogBrand> GetPreconfiguredCatalogBrands()
-        {
-            return new List<CatalogBrand>()
-            {
-                new CatalogBrand() { Code = "armani",Name = "Armani" },
-                new CatalogBrand() { Code = "versace", Name = "House Of Versace" },
-                new CatalogBrand() { Code = "prada", Name = "Prada" },
-                new CatalogBrand() { Code = "gucci", Name = "GUCCI" },
-                new CatalogBrand() { Code = "fendi", Name = "Fendi" },
-                new CatalogBrand() { Code = "nmike", Name = "Nike" },
-                new CatalogBrand() { Code = "puma", Name = "Puma" },
-                new CatalogBrand() { Code = "mn", Name = "New Balance" },
-                new CatalogBrand() { Code = "underarmour", Name = "Under Armour" },
-            };
-        }
-
-        private static IEnumerable<CatalogCategory> GetPreconfiguredCatalogTypes()
-        {
-            return new List<CatalogCategory>()
-            {
-                new CatalogCategory() { Code = "sportswear", Name="Sportswear", LocaleCode="en"},
-                new CatalogCategory() { Code = "mens",  Name = "Mens", LocaleCode="en" },
-                new CatalogCategory() { Code = "womens",Name = "Womens" , LocaleCode="en"},
-                new CatalogCategory() { Code = "kids", Name = "Kids" , LocaleCode="en"},
-                new CatalogCategory() { Code = "fashion", Name = "Fashion" , LocaleCode="en"},
-                new CatalogCategory() { Code = "households", Name = "HouseHolds" , LocaleCode="en"},
-                new CatalogCategory() { Code = "interiors", Name = "Interiors" , LocaleCode="en"},
-                new CatalogCategory() { Code = "clothing", Name = "Clothing", LocaleCode="en" },
-                new CatalogCategory() { Code = "bags", Name = "Bags" , LocaleCode="en"},
-                new CatalogCategory() { Code = "shoes", Name = "Shoes", LocaleCode="en"},
-            };
+        
         }
 
         private static IEnumerable<CatalogDiscount> GetPreconfiguredCatalogDiscounts()
@@ -83,28 +57,36 @@ namespace Catalog.API.Data
                     Code = "weekly",
                     Description="Weekly Discount",
                     Percent= 10, IsActive= true},
-
             };
         }
 
-
-        private static IEnumerable<CatalogItem> GetPreconfiguredProducts()
+        private static (IEnumerable<CatalogCategory>, IEnumerable<CatalogBrand>, IEnumerable<CatalogItem>) ParseCatalogData(string contentRootPath)
         {
-            return new List<CatalogItem>()
+            string fileName = Path.Combine(contentRootPath, "Setup", "InitialCatalogDataSetup.json");
+            var cataLogItems = JsonConvert.DeserializeObject<List<CatalogItem>>(File.ReadAllText(fileName));
+            var brands = cataLogItems.Select(x => x.BrandCode).Distinct();
+            var brandList = brands.Select(x => new CatalogBrand() { Code = x.Replace(" ", "").ToLower(), Name = x }).ToList();
+            var parentCategories = cataLogItems.Select(x => x.ParentCategoryCode).Distinct();
+            var childCategories = cataLogItems.Select(x => x.ChildCategoryCode).Distinct();
+            var categoryList = (parentCategories.Union(childCategories)).Select(x => new CatalogCategory
             {
-                new CatalogItem()
-                {
-                    Code = "PumaMenScuderiaFerrari",
-                    Name = "Puma Men Scuderia Ferrari",
-                    Summary = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
-                    Description = "PUMA Men's Scuderia Ferrari Race Big Shield Tee",
-                    ImageFileName = "PumaMenScuderiaFerrari.jpg",
-                    Price = 140.00M,
-                    CategoryCode = "sportswear",
-                    BrandCode = "puma"
-                },
-               
-            };
+                Code = x.Replace(" ", "").ToLower(),
+                Name = x,
+                LocaleCode = "en"
+            }).ToList();
+
+            var catalogItemList = cataLogItems.Select(x =>
+            {
+                x.Price = x.Price;
+                x.BrandName = x.BrandCode;
+                x.BrandCode = x.BrandCode.Replace(" ", "").ToLower();
+                x.ParentCategoryCode = x.ParentCategoryCode.Replace(" ", "").ToLower();
+                x.ChildCategoryCode = x.ChildCategoryCode.Replace(" ", "").ToLower();
+                return x;
+            });
+            return (categoryList, brandList, catalogItemList);
         }
+
+
     }
 }

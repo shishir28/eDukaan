@@ -20,7 +20,6 @@ namespace Catalog.API.Data
             CatalogBrands = database.GetCollection<CatalogBrand>(config.GetValue<string>("DatabaseSettings:BrandCollectionName"));
             CatalogCategories = database.GetCollection<CatalogCategory>(config.GetValue<string>("DatabaseSettings:CategoryCollectionName"));
             CatalogDiscounts = database.GetCollection<CatalogDiscount>(config.GetValue<string>("DatabaseSettings:DiscountCollectionName"));
-            CatalogContextSeed.SeedData(CatalogCategories, CatalogBrands, CatalogDiscounts, CatalogItems);
         }
 
     }

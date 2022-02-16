@@ -1,0 +1,28 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "basket.api": "StartDebugging",
+        "basketdb": "StartWithoutDebugging",
+        "catalog.api": "StartDebugging",
+        "catalogdb": "StartWithoutDebugging",
+        "discount.api": "StartDebugging",
+        "discount.grpc": "StartDebugging",
+        "discountdb": "StartWithoutDebugging",
+        "identity.api": "StartDebugging",
+        "identitydb": "StartWithoutDebugging",
+        "ocelotapigw": "StartDebugging",
+        "order.api": "StartDebugging",
+        "orderdb": "StartWithoutDebugging",
+        "pgadmin": "StartWithoutDebugging",
+        "portainer": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "razor.ui": "StartDebugging",
+        "shopping.aggregator": "StartDebugging",
+        "user.api": "StartDebugging"
+      }
+    }
+  }
+}

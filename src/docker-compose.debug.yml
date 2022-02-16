@@ -1,0 +1,236 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      -  '27017:27017'   #port 27017 is exposed on the host
+    volumes:
+      - mongo_data:/data/db
+  
+  identitydb:
+    container_name: identitydb
+    restart: always
+    environment:
+      SA_PASSWORD: "test123#"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1434:1433
+ 
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      -  '6379:6379'   #port 6379 is exposed on the host
+
+  discountdb:
+    container_name: discountdb
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: DiscountDb
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  orderdb:
+    container_name: orderdb
+    restart: always
+    environment:
+      SA_PASSWORD: "test123#"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1435:1433
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      -  '5672:5672'   #port 5672 is exposed on the host
+      - '15672:15672'   #port 15672 is exposed on the host
+
+  pgadmin:
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      -  '9000:9000'   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - portainer_data:/data
+
+  identity.api:
+    container_name: identity.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
+      - "RazorClient=http://razor.ui"  
+      - "CatalogApiClient=http://catalog.api"  
+      - "BasketApiClient=http://basket.api"  
+      - "DiscountApiClient=http://discount.api"  
+      - "OrderingApiClient=http://order.api"  
+      - "UserApiClient=http://user.api"  
+      - "WebShoppingAgg=http://shopping.aggregator"  
+      - "IssuerUri=http://identity.api"  
+      - "UseCustomizationData=false"  
+      - "TokenLifetimeMinutes=120"  
+      - "UseVault=false"  
+      - "PermanentTokenLifetimeDays=365"  
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=test123#"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/edukaan.pfx"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ~/.vsdbg:/remote_debugger:rw
+    ports:
+    - "7000:80"  
+    - "7300:443"
+    depends_on:
+      - identitydb
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+      - "DatabaseSettings:DatabaseName=Catalog"
+      - "DatabaseSettings:CollectionName=Products"
+    depends_on:
+      - catalogdb
+    ports:
+      - "7001:80"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+      - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:Host=amqp://rabbitmq:5672"
+      - "EventBusSettings:Username=guest"
+      - "EventBusSettings:Password=guest"
+      - "IdentityUrl=http://identity.api"
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "7002:80"  
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
+      - "IdentityUrl=http://identity.api"
+    depends_on:
+      - discountdb
+    ports:
+      - "7003:80"  
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+      
+  discount.grpc:
+    container_name: discount.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
+    depends_on:
+      - discountdb
+    ports:
+      - "7004:80"  
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=test123#"  
+      - "EventBusSettings:Host=amqp://rabbitmq:5672"
+      - "EventBusSettings:Username=guest"
+      - "EventBusSettings:Password=guest"
+      - "IdentityUrl=http://identity.api"
+    depends_on:
+      - orderdb
+      - rabbitmq
+    ports:
+      - "7005:80"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  
+  user.api:
+    container_name: user.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
+      - "IdentityUrl=http://identity.api"  
+    ports:
+      - "7006:80"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "IdentityUrl=http://identity.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - order.api
+    ports:
+      - "7010:80"  
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:CatalogUrl=http://catalog.api"
+      - "ApiSettings:BasketUrl=http://basket.api"
+      - "ApiSettings:OrderUrl=http://order.api"
+      - "IdentityUrl=http://identity.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - order.api
+    ports:
+      - "7008:80"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  razor.ui:
+    container_name: razor.ui
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+      - "IdentityUrl=http://identity.api"
+      - "CallBackUrl=http://razor.ui"
+      - "SessionCookieLifetimeMinutes=60"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=test123#"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/edukaan.pfx"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ~/.vsdbg:/remote_debugger:rw
+
+    ports:
+      - "7100:80"
+      - "7200:443"
