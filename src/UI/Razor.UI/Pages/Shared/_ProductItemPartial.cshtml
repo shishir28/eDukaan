@@ -3,14 +3,15 @@
 <div class="product-image-wrapper">
     <div class="single-products">
         <div class="productinfo text-center">
-            @* <img src="images/shop/product12.jpg" alt="" />*@
-            <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" class="card-img-top" src="~/images/product/@Model.MediumImageURL" alt=""></a>
+            <a asp-page="ProductDetail" asp-route-productId="@Model.Id"><img asp-append-version="true" width="268"
+                    height="249" class="card-img-top" src="@Model.MediumImageURL" alt=""></a>
             <h2>$@Model.Price</h2>
             <p>@Model.Name</p>
             <a href="#" class="btn btn-default add-to-cart">
                 <i class="fa fa-shopping-cart"></i>Add to cart
                 <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
-                    <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to Cart</a>
+                    <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to
+                        Cart</a>
                     <input type="hidden" asp-for="@Model.Id" name="productId" />
                 </form>
 
@@ -21,7 +22,8 @@
                 <h2>$@Model.Price</h2>
                 <p>@Model.Name</p>
                 <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
-                    <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to Cart</a>
+                    <a href="javascript:;" onclick="parentNode.submit();" class="btn btn-success btn-block">Add to
+                        Cart</a>
                     <input type="hidden" asp-for="@Model.Id" name="productId" />
                 </form>
 
@@ -37,7 +39,8 @@
 
 
     @* <div class="card-body">
-        <h4 class="card-title"><a asp-page="ProductDetail" asp-route-productId="@Model.Id" class="color-main">@Model.Name</a></h4>
+        <h4 class="card-title"><a asp-page="ProductDetail" asp-route-productId="@Model.Id"
+        class="color-main">@Model.Name</a></h4>
         <p class="card-text">@Model.Summary</p>
         <div class="row">
         <div class="col">

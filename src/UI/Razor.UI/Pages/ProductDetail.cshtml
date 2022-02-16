@@ -1,6 +1,8 @@
 ﻿@page "/Product/{productId}"
 @model Razor.UI.ProductDetailModel
 @{
+
+
     ViewData["Title"] = "ProductDetail";
 }
 
@@ -25,10 +27,8 @@
             <div class="card bg-light mb-3">
                 <div class="card-body">
                     <a href="" data-toggle="modal" data-target="#productModal">
-                        <img class="img-fluid" src="~/images/product/@Model.Product.MediumImageURL.Replace('-','x')"
-                            />
-                        <p class="text-center">@Model.Product.Name</p>
-                    </a>
+                        <img width="268" height="249" class="img-fluid" src="@Model.Product.MediumImageURL.Replace('-','x')" />class="text-center">@Model.Product.Name</p>
+                    </a> 
                 </div>
             </div>
         </div>
