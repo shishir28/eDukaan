@@ -1,4 +1,6 @@
-﻿namespace Razor.UI.Pages
+﻿using System.Linq;
+
+namespace Razor.UI.Pages
 {
     public class IndexModel : PageModel
     {
@@ -32,7 +34,26 @@
             {
                 ProductList = productList;
                 ProductBrandList = await _catalogServcie.GetCatalogBrand();
+             
+
                 ProductCategoryList = await _catalogServcie.GetCatalogCategory();
+
+                ProductBrandList= ProductBrandList.Select(x =>
+                {
+                    x.ProductCount = productList.Where(p => p.BrandCode == x.Code).Count();
+                    return x;
+                });
+
+                ProductBrandList =  ProductBrandList.Where(x => x.ProductCount > 0).ToList();
+
+                ProductCategoryList = ProductCategoryList.Select(x =>
+                {
+                    x.ProductCount = productList.Where(p => p.ParentCategoryCode == x.Code).Count();
+                    return x;
+                });
+
+                ProductCategoryList = ProductCategoryList.Where(x => x.ProductCount > 0).ToList();
+
             }
 
             return Page();
