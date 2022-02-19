@@ -95,8 +95,9 @@ services:
       - ~/.aspnet/https:/https:ro
       - ~/.vsdbg:/remote_debugger:rw
     ports:
-    - "7000:80"  
-    - "7300:443"
+    - "8000:80"  
+    - "8300:443"  
+
     depends_on:
       - identitydb
 
@@ -110,10 +111,10 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "7001:80"
+      - "8001:80"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-  
+
   basket.api:
     container_name: basket.api
     environment:
@@ -124,14 +125,15 @@ services:
       - "EventBusSettings:Username=guest"
       - "EventBusSettings:Password=guest"
       - "IdentityUrl=http://identity.api"
+
     depends_on:
       - basketdb
       - rabbitmq
     ports:
-      - "7002:80"  
+      - "8002:80"  
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-
+  
   discount.api:
     container_name: discount.api
     environment:
@@ -141,10 +143,10 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "7003:80"  
+      - "8003:80"  
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-      
+  
   discount.grpc:
     container_name: discount.grpc
     environment:
@@ -153,7 +155,7 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "7004:80"  
+      - "8004:80"  
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
   
@@ -170,7 +172,7 @@ services:
       - orderdb
       - rabbitmq
     ports:
-      - "7005:80"
+      - "8005:80"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
   
@@ -181,9 +183,10 @@ services:
       - "ConnectionString=Server=identitydb;Database=Identity.API;User Id=sa;Password=test123#"  
       - "IdentityUrl=http://identity.api"  
     ports:
-      - "7006:80"
+      - "8006:80"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+  
   ocelotapigw:
     container_name: ocelotapigw
     environment:
@@ -195,10 +198,10 @@ services:
       - discount.api
       - order.api
     ports:
-      - "7010:80"  
+      - "8010:80"  
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-
+  
   shopping.aggregator:
     container_name: shopping.aggregator
     environment:
@@ -212,7 +215,7 @@ services:
       - basket.api
       - order.api
     ports:
-      - "7008:80"
+      - "8008:80"
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
 
@@ -232,5 +235,5 @@ services:
       - ~/.vsdbg:/remote_debugger:rw
 
     ports:
-      - "7100:80"
-      - "7200:443"
+      - "8100:80"
+      - "8200:443"
