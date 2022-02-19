@@ -5,15 +5,14 @@
     public class CartModel : PageModel
     {
         private readonly IBasketService _basketService;
-
+        public BasketModel Cart { get; set; } = new BasketModel();
 
         public CartModel(IBasketService basketService)
         {
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
-        public BasketModel Cart { get; set; } = new BasketModel();
-
+    
         public async Task<IActionResult> OnGetAsync()
         {
             Cart = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);

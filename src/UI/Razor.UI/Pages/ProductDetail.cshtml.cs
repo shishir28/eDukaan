@@ -23,15 +23,13 @@
         public async Task<IActionResult> OnGetAsync(string productId)
         {
             if (productId == null)
-            {
                 return NotFound();
-            }
 
             Product = await _catalogService.GetCatalog(productId);
+
             if (Product == null)
-            {
                 return NotFound();
-            }
+
             return Page();
         }
 
@@ -52,7 +50,10 @@
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
 
-            return RedirectToPage("Cart");
+            // return RedirectToPage("Cart");
+
+            return RedirectToPage("ProductDetailModel");
+
         }
     }
 }
