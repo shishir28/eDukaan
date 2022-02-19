@@ -38,8 +38,7 @@
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
             var product = await _catalogService.GetCatalog(productId);
-
-            var userName = "swn";
+            var userName = this.HttpContext.User.Identity.Name;
             var basket = await _basketService.GetBasket(userName);
 
             basket.Items.Add(new BasketItemModel
@@ -48,7 +47,7 @@
                 ProductName = product.Name,
                 Price = product.Price,
                 Quantity = Quantity,
-                Color = Color
+                SmallImageURL = product.SmallImageURL
             });
 
             var basketUpdated = await _basketService.UpdateBasket(basket);

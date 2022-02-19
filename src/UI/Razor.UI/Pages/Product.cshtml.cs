@@ -18,7 +18,6 @@
         public IEnumerable<CatalogCategoryModel> ProductCategoryList { get; set; } = new List<CatalogCategoryModel>();
 
 
-
         [BindProperty(SupportsGet = true)]
         public string SelectedCategory { get; set; }
 
@@ -71,7 +70,7 @@
                   ProductName = product.Name,
                   Price = product.Price,
                   Quantity = 1,
-                  Color = "Black"
+                  SmallImageURL = product.SmallImageURL
               });
 
             var basketUpdated = await _basketService.UpdateBasket(basket);

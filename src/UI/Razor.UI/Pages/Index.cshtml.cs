@@ -34,17 +34,17 @@ namespace Razor.UI.Pages
             {
                 ProductList = productList;
                 ProductBrandList = await _catalogServcie.GetCatalogBrand();
-             
+
 
                 ProductCategoryList = await _catalogServcie.GetCatalogCategory();
 
-                ProductBrandList= ProductBrandList.Select(x =>
-                {
-                    x.ProductCount = productList.Where(p => p.BrandCode == x.Code).Count();
-                    return x;
-                });
+                ProductBrandList = ProductBrandList.Select(x =>
+                 {
+                     x.ProductCount = productList.Where(p => p.BrandCode == x.Code).Count();
+                     return x;
+                 });
 
-                ProductBrandList =  ProductBrandList.Where(x => x.ProductCount > 0).ToList();
+                ProductBrandList = ProductBrandList.Where(x => x.ProductCount > 0).ToList();
 
                 ProductCategoryList = ProductCategoryList.Select(x =>
                 {
@@ -63,9 +63,7 @@ namespace Razor.UI.Pages
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
             var product = await _catalogServcie.GetCatalog(productId);
-            var userName = "swn";
-
-            var basket = await _basketService.GetBasket(userName);
+            var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
 
             basket.Items.Add(
                 new BasketItemModel
@@ -74,8 +72,7 @@ namespace Razor.UI.Pages
                     ProductName = product.Name,
                     Price = product.Price,
                     Quantity = 1,
-                    Color = "Black"
-
+                    SmallImageURL = product.SmallImageURL
                 }
                 );
 

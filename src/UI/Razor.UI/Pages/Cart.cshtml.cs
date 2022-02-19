@@ -6,6 +6,7 @@
     {
         private readonly IBasketService _basketService;
 
+
         public CartModel(IBasketService basketService)
         {
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
@@ -15,8 +16,7 @@
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = this.HttpContext.User.Identity.Name;
-            var basket = await _basketService.GetBasket(userName);
+            Cart = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
             return Page();
         }
 

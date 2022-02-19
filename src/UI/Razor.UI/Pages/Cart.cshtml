@@ -1,82 +1,79 @@
 ﻿@page
 @model Razor.UI.CartModel
 @{
+
+
     ViewData["Title"] = "Cart";
 }
 
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
+    @* <div class="breadcrumbs">
+        <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Shopping Cart</li>
+        </ol>
+        </div> *@
 
-<div class="container mb-4">
     <div class="row">
-        <div class="col-12">
-            <div class="table-responsive cart_info">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Item</td>
-                            <td class="description"></td>
-                            <td class="price">Price</td>
-                            <td class="quantity">Quantity</td>
-                            <td class="total">Total</td>
-                            <td></td>
+
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var cartItem in Model.Cart.Items)
+                    {
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img src=@cartItem.SmallImageURL alt=""></a>
+                            </td>
+                            <td class="cart_description">
+
+                                <h4><a href="">@cartItem.ProductName</a></h4>
+                                @* <p>Web ID: 1089772</p> *@
+                            </td>
+
+                            <td class="cart_price">
+                                <p>$@(cartItem.Price * cartItem.Quantity)</p>
+                            </td>
+
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up" href=""> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity"
+                                    value="@cartItem.Quantity" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" href=""> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">$@(cartItem.Price * cartItem.Quantity)</p>
+                            </td>
+                            <td class="cart_delete">
+                                <form asp-page-handler="removetocart" method="post">
+                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                    <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
+                    }
 
-                        @foreach (var cartItem in Model.Cart.Items)
-                        {
-                            <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="images/cart/one.png" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">@cartItem.ProductName</a></h4>
-                                    @* <p>Web ID: 1089772</p> *@
-                                </td>
-
-                                <td class="cart_price">
-                                    <p>$@(cartItem.Price * cartItem.Quantity)</p>
-                                </td>
-
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity"
-                                        value="@cartItem.Quantity" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$@(cartItem.Price * cartItem.Quantity)</p>
-                                </td>
-                                <td class="cart_delete">
-
-                                    <form asp-page-handler="removetocart" method="post">
-                                        <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                        <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
-                                    </form>
-
-                                </td>
-                            </tr>
-                        }
-
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
+
+
         <div class="col mb-2">
             <div class="row">
+
                 <div class="col-sm-12  col-md-6">
                     @*<button class="btn btn-lg btn-block btn-danger">Continue Shopping</button>*@
                     <a asp-page="Product" class="btn btn-lg btn-block btn-success">Continue Shopping</a>
