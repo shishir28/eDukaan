@@ -83,7 +83,7 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    Color = "Red",
+                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -132,7 +132,7 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    Color = "Red",
+                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -169,7 +169,7 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    Color = "Red",
+                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -237,7 +237,7 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    Color = "Red",
+                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"

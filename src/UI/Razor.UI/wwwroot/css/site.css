@@ -6,3 +6,11 @@
   max-width: 30em;
   margin: auto;
 }
+
+.cart_product {
+  display: table-cell !important;
+}
+
+.cart_delete {
+  display: table-cell !important;
+}
