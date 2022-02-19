@@ -51,7 +51,8 @@
                                 </td>
                                 <td class="cart_delete">
                                     <form asp-page-handler="removetocart" method="post">
-                                        <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                        <a class="cart_quantity_delete" href="javascript:;"
+                                        onclick="parentNode.submit();"><i class="fa fa-times"></i></a>
                                         <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
                                     </form>
                                 </td>

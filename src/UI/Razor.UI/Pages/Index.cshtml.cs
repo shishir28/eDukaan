@@ -77,7 +77,7 @@ namespace Razor.UI.Pages
                 );
 
             await _basketService.UpdateBasket(basket);
-            return RedirectToPage("Index");
+            return RedirectToPage();
             // return RedirectToPage("Cart");
         }
     }

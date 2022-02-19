@@ -74,7 +74,7 @@
               });
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
-            return RedirectToPage("Product");
+            return RedirectToPage();
 
             // return RedirectToPage("Cart");
         }

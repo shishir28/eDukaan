@@ -12,7 +12,7 @@
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
-    
+
         public async Task<IActionResult> OnGetAsync()
         {
             Cart = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);

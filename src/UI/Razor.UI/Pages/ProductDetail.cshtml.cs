@@ -52,7 +52,7 @@
 
             // return RedirectToPage("Cart");
 
-            return RedirectToPage("ProductDetailModel");
+            return RedirectToPage();
 
         }
     }
