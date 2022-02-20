@@ -19,7 +19,7 @@
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
+        public async Task<IActionResult> OnPostRemoveFromCartAsync(string productId)
         {
             var userName = this.HttpContext.User.Identity.Name;
             var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
@@ -31,5 +31,18 @@
 
             return RedirectToPage();
         }
+
+
+        public async Task<IActionResult> OnPostChangeQuantityAsync(string productId, int quantity)
+        {
+            var userName = this.HttpContext.User.Identity.Name;
+            var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
+            basket.Items.Single(x => x.ProductId == productId).Quantity = quantity;
+            var basketUpdated = await _basketService.UpdateBasket(basket);
+
+            return RedirectToPage();
+        }
+
+
     }
 }

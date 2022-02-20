@@ -24,7 +24,7 @@
 
                         @foreach (var cartItem in Model.Cart.Items)
                         {
-                            <tr>
+                              <tr id="tr_@cartItem.ProductId.ToString()">
                                 <td class="cart_product">
                                     <a href=""><img src=@cartItem.SmallImageURL alt=""></a>
                                 </td>
@@ -38,22 +38,25 @@
                                     <p>$@(cartItem.Price * cartItem.Quantity)</p>
                                 </td>
 
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity"
-                                        value="@cartItem.Quantity" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
+
+                                <td class="cart_quantity" id="td_@cartItem.ProductId.ToString()">
+                                    <form asp-page-handler="changequantity" method="post">
+                                             <input type="hidden" name="productId" value="@cartItem.ProductId.ToString()" />  
+                                             <input type="hidden" name="quantity" id="hidden_@cartItem.ProductId.ToString()" />  
+
+                                             <input  id="input_@cartItem.ProductId.ToString()" asp-for=@cartItem.Quantity id="input_@cartItem.ProductId.ToString()" 
+                                         oninput="editCartRowData('@cartItem.ProductId');parentNode.submit();" type="number" value =@cartItem.Quantity />
+                                    </form>
                                 </td>
+
                                 <td class="cart_total">
                                     <p class="cart_total_price">$@(cartItem.Price * cartItem.Quantity)</p>
                                 </td>
                                 <td class="cart_delete">
-                                    <form asp-page-handler="removetocart" method="post">
+                                    <form asp-page-handler="removefromcart" method="post">
                                         <a class="cart_quantity_delete" href="javascript:;"
                                         onclick="parentNode.submit();"><i class="fa fa-times"></i></a>
-                                        <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
+                                        <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />                                        
                                     </form>
                                 </td>
                             </tr>
@@ -91,3 +94,11 @@
         </div>
     </section>
 </div>
+@section Scripts{
+<script>   
+     function editCartRowData(productId) {
+        let newValue = $("#input_"+productId).val();
+        $("#hidden_"+productId).val(newValue);       
+     }
+</script>
+}
