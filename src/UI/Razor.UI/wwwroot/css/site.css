@@ -14,3 +14,11 @@
 .cart_delete {
   display: table-cell !important;
 }
+
+.btn.btn-primary {
+  margin: 16px 1px 0 1px !important;
+}
+
+.btn.btn-secondary {
+  margin: 16px 1px 0 1px !important;
+}
