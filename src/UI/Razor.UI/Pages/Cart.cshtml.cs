@@ -24,7 +24,7 @@
             var userName = this.HttpContext.User.Identity.Name;
             var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
 
-            var item = basket.Items.Single(x => x.ProductId == productId);
+            var item = basket.Items.FirstOrDefault(x => x.ProductId == productId);
             basket.Items.Remove(item);
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
@@ -37,7 +37,7 @@
         {
             var userName = this.HttpContext.User.Identity.Name;
             var basket = await _basketService.GetBasket(this.HttpContext.User.Identity.Name);
-            basket.Items.Single(x => x.ProductId == productId).Quantity = quantity;
+            basket.Items.FirstOrDefault(x => x.ProductId == productId).Quantity = quantity;
             var basketUpdated = await _basketService.UpdateBasket(basket);
 
             return RedirectToPage();

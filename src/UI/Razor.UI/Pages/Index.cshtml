@@ -78,7 +78,7 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     <h2>Category</h2>
-                    <div class="panel-group category-products" id="accordian">
+                    <div class="panel-group category-products category-list" id="accordian">
                         <!--category-productsr-->
                         @foreach (var productCategory in Model.ProductCategoryList)
                         {
@@ -95,7 +95,7 @@
                         <!--brands_products-->
                         <h2>Brands</h2>
                         <div class="brands-name">
-                            <ul class="nav nav-pills nav-stacked">
+                            <ul class="nav nav-pills nav-stacked brand-list">
 
                                 @foreach (var productBrand in Model.ProductBrandList)
                                 {
