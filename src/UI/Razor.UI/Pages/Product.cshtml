@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "/product/{pageindex:int=1}"
+@addTagHelper *,Pager
 @model Razor.UI.ProductModel
 @{
     ViewData["Title"] = "Product";
@@ -60,7 +61,7 @@
                     <h2>Price Range</h2>
                     <div class="well">
                         <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600"
-                               data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+                            data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
                         <b>$ 0</b> <b class="pull-right">$ 600</b>
                     </div>
                 </div>
@@ -72,12 +73,14 @@
         <div class="col-sm-9 padding-right">
             <div class="features_items">
                 <!--features_items-->
-                @foreach (var product in Model.ProductList)
+                @foreach (var product in Model.PagedCatalog)
                 {
                     <div class="col-12 col-md-6 col-lg-4">
                         <partial name="_ProductItemPartial" model="@product" />
                     </div>
                 }
+                <razorpager aria-label="Page navigation" tag-name="nav" total-item-count="Model.TotalItems"
+                    template-name="basic" page-size="Model.PageSize"></razorpager>
             </div>
         </div>
 

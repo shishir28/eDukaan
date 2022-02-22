@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "/{pageindex:int=1}"
+@addTagHelper *,Pager
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -99,7 +100,9 @@
 
                                 @foreach (var productBrand in Model.ProductBrandList)
                                 {
-                                    <li><a href=""> <span class="pull-right">(@productBrand.ProductCount)</span>@productBrand.Name</a></li>
+                                    <li><a href=""> <span
+                                            class="pull-right">(@productBrand.ProductCount)</span>@productBrand.Name</a>
+                                    </li>
                                 }
 
                             </ul>
@@ -123,12 +126,14 @@
             <div class="col-sm-9 padding-right">
                 <div class="features_items">
                     <!--features_items-->
-                    @foreach (var product in Model.ProductList)
+                    @foreach (var product in Model.PagedCatalog)
                     {
                         <div class="col-12 col-md-6 col-lg-4">
                             <partial name="_ProductItemPartial" model="@product" />
                         </div>
                     }
+                    <razorpager aria-label="Page navigation" tag-name="nav" total-item-count="Model.TotalItems"
+                        template-name="basic" page-size="Model.PageSize"></razorpager>
 
                 </div>
             </div>

@@ -14,6 +14,11 @@ namespace Razor.UI.Pages
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
+        public int PageSize = 10;
+        [BindProperty(SupportsGet = true)]
+        public int PageIndex { get; set; }
+        public int TotalItems { get; set; }
+        public List<CatalogModel> PagedCatalog { get; set; }
         public IEnumerable<string> CategoryList { get; set; } = new List<string>();
         public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
         public IEnumerable<CatalogBrandModel> ProductBrandList { get; set; } = new List<CatalogBrandModel>();
@@ -53,6 +58,11 @@ namespace Razor.UI.Pages
                 });
 
                 ProductCategoryList = ProductCategoryList.Where(x => x.ProductCount > 0).ToList();
+
+                PagedCatalog = ProductList.Skip((PageIndex - 1) * PageSize)
+             .Take(PageSize).ToList();
+
+                TotalItems = ProductList.Count();
 
             }
 
