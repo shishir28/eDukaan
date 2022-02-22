@@ -38,9 +38,24 @@ namespace Basket.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ShoppingCart>> GetBasket(string userName)
         {
+
             try
             {
                 var basekt = await _basketRepository.GetBasket(userName);
+                if (basekt != null)
+                {
+                    var qry = from item in basekt.Items
+                              group item by item.ProductId into g
+                              select new ShoppingCartItem
+                              {
+                                  ProductId = g.Key,
+                                  SmallImageURL = g.FirstOrDefault().SmallImageURL,
+                                  Price = g.FirstOrDefault().Price,
+                                  ProductName = g.FirstOrDefault().ProductName,
+                                  Quantity = g.Sum(x => x.Quantity)
+                              };
+                    basekt.Items = qry.ToList();
+                }
                 return Ok(basekt ?? new ShoppingCart(userName));
             }
             catch (Exception ex)
