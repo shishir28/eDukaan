@@ -12,7 +12,7 @@
             _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
-        public int PageSize = 10;
+        public int PageSize = 9;
         [BindProperty(SupportsGet = true)]
         public int PageIndex { get; set; }
         public int TotalItems { get; set; }
@@ -59,7 +59,7 @@
                 ProductCategoryList = ProductCategoryList.Where(x => x.ProductCount > 0).ToList();
 
                 PagedCatalog = ProductList.Skip((PageIndex - 1) * PageSize)
-                .Take(PageSize).ToList();
+                .Take(PageSize).OrderBy(x => x.Name).ToList();
 
                 TotalItems = ProductList.Count();
             }
@@ -85,8 +85,6 @@
 
             var basketUpdated = await _basketService.UpdateBasket(basket);
             return RedirectToPage();
-
-            // return RedirectToPage("Cart");
         }
     }
 }

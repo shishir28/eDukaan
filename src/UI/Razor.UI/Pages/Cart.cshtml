@@ -43,7 +43,6 @@
                                     <form asp-page-handler="changequantity" method="post">
                                         <input type="hidden" name="productId" value="@cartItem.ProductId.ToString()" />
                                         <input type="hidden" name="quantity" id="hidden_@cartItem.ProductId.ToString()" />
-
                                         <input id="input_@cartItem.ProductId.ToString()" asp-for=@cartItem.Quantity
                                         id="input_@cartItem.ProductId.ToString()"
                                         oninput="editCartRowData('@cartItem.ProductId');parentNode.submit();"
@@ -61,7 +60,7 @@
                                         <input type="hidden" asp-for="@cartItem.ProductId" name="productId" />
                                     </form>
                                 </td>
-                            </tr>
+                               </tr>
                         }
                         <tr>
                             <td></td>
