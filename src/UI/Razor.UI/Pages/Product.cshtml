@@ -25,14 +25,19 @@
                 <h2>Category</h2>
                 <div class="panel-group category-products" id="accordian">
                     <!--category-productsr-->
-                    @foreach (var productCategory in Model.ProductCategoryList)
-                    {
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#">@productCategory.Name</a></h4>
+                    <form asp-page-handler="filterCatalogByCategory" method="post">
+                        <input type="hidden" name="categoryCode" id="hiddenCategoryCode" />
+                        @foreach (var productCategory in Model.ProductCategoryList)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#"
+                                        onclick="categoryCodeClick('@productCategory.Code', parentNode.parentNode.parentNode.parentNode);">@productCategory.Name</a>
+                                    </h4>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </form>
                 </div>
                 <!--/category-productsr-->
 
@@ -40,18 +45,20 @@
                     <!--brands_products-->
                     <h2>Brands</h2>
                     <div class="brands-name">
-                        <ul class="nav nav-pills nav-stacked brand-list">
-
-                            @foreach (var productBrand in Model.ProductBrandList)
-                            {
-                                <li>
-                                    <a href="">
-                                        <span class="pull-right">(@productBrand.ProductCount)</span>@productBrand.Name
-                                    </a>
-                                </li>
-                            }
-
-                        </ul>
+                        <form asp-page-handler="filterCatalogByBrand" method="post">
+                            <input type="hidden" name="brandCode" id="hiddenBrandCode" />
+                            <ul class="nav nav-pills nav-stacked brand-list">
+                                @foreach (var productBrand in Model.ProductBrandList)
+                                {
+                                    <li>
+                                        <a href="javascript:;"
+                                        onclick="brandCodeClick('@productBrand.Code', parentNode.parentNode.parentNode); ">
+                                            <span
+                                            class="pull-right">(@productBrand.ProductCount)</span>@productBrand.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </form>
                     </div>
                 </div>
                 <!--/brands_products-->
@@ -86,3 +93,17 @@
 
     </div>
 </div>
+@section Scripts{
+<script>
+    function brandCodeClick(brandCode, currentForm) {
+        $('#hiddenBrandCode').val(brandCode);
+        currentForm.submit();
+    }
+
+    function categoryCodeClick(categoryCode, currentForm) {
+        $('#hiddenCategoryCode').val(categoryCode);
+        currentForm.submit();
+    }
+
+</script>
+}

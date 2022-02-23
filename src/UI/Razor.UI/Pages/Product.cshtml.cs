@@ -25,46 +25,56 @@
 
         [BindProperty(SupportsGet = true)]
         public string SelectedCategory { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(string categoryName)
+        public async Task<IActionResult> OnGetAsync(string categoryCode, string brandCode)
         {
+            ProductBrandList = await _catalogServcie.GetCatalogBrand();
+            ProductCategoryList = await _catalogServcie.GetCatalogCategory();
+
             var productList = await _catalogServcie.GetCatalog();
-            //CategoryList = productList.Select(p => p.Category).ToList();
 
-            //if (!string.IsNullOrWhiteSpace(categoryName))
-            //{
-            //    ProductList = productList.Where(p => p.Category == categoryName);
-            //    SelectedCategory = categoryName;
-            //}
-            //else
-            {
+            // filter products by brand
+            if (!string.IsNullOrWhiteSpace(brandCode))
+                ProductList = productList.Where(p => p.BrandCode == brandCode);
+
+            // filter products by category
+            if (!string.IsNullOrWhiteSpace(categoryCode))
+                ProductList = productList.Where(p => string.Equals(p.ParentCategoryCode, categoryCode) || string.Equals(p.ChildCategoryCode, categoryCode));
+
+
+            if (string.IsNullOrWhiteSpace(brandCode) && string.IsNullOrWhiteSpace(categoryCode))
                 ProductList = productList;
-                ProductBrandList = await _catalogServcie.GetCatalogBrand();
-                ProductCategoryList = await _catalogServcie.GetCatalogCategory();
 
-                ProductBrandList = ProductBrandList.Select(x =>
+            ProductBrandList = ProductBrandList.Select(x =>
                 {
-                    x.ProductCount = productList.Where(p => p.BrandCode == x.Code).Count();
+                    x.ProductCount = ProductList.Where(p => p.BrandCode == x.Code).Count();
                     return x;
                 });
 
-                ProductBrandList = ProductBrandList.Where(x => x.ProductCount > 0).ToList();
+            ProductBrandList = ProductBrandList.Where(x => x.ProductCount > 0).ToList();
 
-                ProductCategoryList = ProductCategoryList.Select(x =>
-                {
-                    x.ProductCount = productList.Where(p => p.ParentCategoryCode == x.Code).Count();
-                    return x;
-                });
+            ProductCategoryList = ProductCategoryList.Select(x =>
+            {
+                x.ProductCount = ProductList.Where(p => p.ParentCategoryCode == x.Code).Count();
+                return x;
+            });
 
-                ProductCategoryList = ProductCategoryList.Where(x => x.ProductCount > 0).ToList();
+            ProductCategoryList = ProductCategoryList.Where(x => x.ProductCount > 0).ToList();
 
-                PagedCatalog = ProductList.Skip((PageIndex - 1) * PageSize)
-                .Take(PageSize).OrderBy(x => x.Name).ToList();
+            PagedCatalog = ProductList.Skip((PageIndex - 1) * PageSize)
+            .Take(PageSize).OrderBy(x => x.Name).ToList();
 
-                TotalItems = ProductList.Count();
-            }
-
+            TotalItems = ProductList.Count();
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostFilterCatalogByBrandAsync(string brandCode)
+        {
+            return RedirectToPage("/product", new { brandCode });
+        }
+
+        public async Task<IActionResult> OnPostFilterCatalogByCategoryAsync(string categoryCode)
+        {
+            return RedirectToPage("/product", new { categoryCode });
         }
 
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
