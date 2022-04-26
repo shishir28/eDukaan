@@ -55,15 +55,12 @@ namespace Discount.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> UpdateDiscount([FromBody] Coupon coupon)
         {
             try
             {
                 return Ok(await _discountRepository.UpdateDiscount(coupon));
-                //await _discountRepository.UpdateDiscount(coupon);
-                //return NoContent();
             }
             catch (Exception ex)
             {
@@ -73,16 +70,12 @@ namespace Discount.API.Controllers
         }
 
         [HttpDelete("{productName}", Name = "DeleteDiscount")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> DeleteDiscount(string productName)
         {
             try
             {
-                //await _discountRepository.DeleteDiscount(productName);
-                //return NoContent();
                 return Ok(await _discountRepository.DeleteDiscount(productName));
             }
             catch (Exception ex)
@@ -91,6 +84,5 @@ namespace Discount.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data from the database");
             }
         }
-
     }
 }

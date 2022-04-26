@@ -17,7 +17,5 @@ namespace Shopping.Aggregator.Services
             var response = await _client.GetAsync($"/api/v1/Order/{userName}");
             return await response.ReadContentAs<List<OrderResponseModel>>();
         }
-
-       
     }
 }

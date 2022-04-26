@@ -38,6 +38,5 @@ namespace Catalog.API.Repositories
             var deleteResult = await _context.CatalogItems.DeleteOneAsync(x => x.Id == id);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
-
     }
 }

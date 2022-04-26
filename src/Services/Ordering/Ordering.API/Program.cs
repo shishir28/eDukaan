@@ -12,7 +12,6 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 
-
 var identityUrl = configuration.GetValue<string>("IdentityUrl");
 builder.Services.AddAuthentication(options =>
 {
@@ -65,9 +64,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Ordering.API", Version = "v1" });
 });
-
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
+app.MapHealthChecks("/healthz");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

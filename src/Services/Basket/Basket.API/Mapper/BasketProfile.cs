@@ -12,5 +12,4 @@ namespace Basket.API.Mapper
             CreateMap<BasketCheckout, BasketCheckoutEvent>().ReverseMap();
         }
     }
-
 }

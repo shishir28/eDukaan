@@ -43,6 +43,4 @@ await app.UseOcelot();
 
 app.MapGet("/", () => "Hello World!");
 
-
-
 app.Run();

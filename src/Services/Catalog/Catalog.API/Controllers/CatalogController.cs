@@ -42,7 +42,7 @@ namespace Catalog.API.Controllers
         }
 
 
-        [HttpGet("brands")]        
+        [HttpGet("brands")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatalogBrand>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<CatalogBrand>>> GetProductBrands()
@@ -73,7 +73,6 @@ namespace Catalog.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
-
 
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatalogItem))]
@@ -188,6 +187,5 @@ namespace Catalog.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the product");
             }
         }
-
     }
 }

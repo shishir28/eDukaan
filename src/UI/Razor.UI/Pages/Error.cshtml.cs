@@ -16,9 +16,7 @@ namespace Razor.UI.Pages
             _logger = logger;
         }
 
-        public void OnGet()
-        {
+        public void OnGet() =>
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-        }
     }
 }

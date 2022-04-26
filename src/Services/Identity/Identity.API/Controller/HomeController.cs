@@ -6,25 +6,21 @@ namespace Identity.API.Controller
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IIdentityServerInteractionService _interaction;
-        //private readonly IOptionsSnapshot<AppSettings> _settings;
         private readonly IRedirectService _redirectSvc;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IIdentityServerInteractionService interaction, 
-            //IOptionsSnapshot<AppSettings> settings, 
+        public HomeController(IIdentityServerInteractionService interaction,
             IRedirectService redirectSvc,
             ILogger<HomeController> logger
             )
         {
             _interaction = interaction;
-            //_settings = settings;
             _redirectSvc = redirectSvc;
             _logger = logger;
         }
 
         public IActionResult Index(string returnUrl)
         {
-            
             return View();
         }
 
@@ -56,6 +52,5 @@ namespace Identity.API.Controller
 
             return View("Error", vm);
         }
-
     }
 }

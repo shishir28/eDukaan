@@ -16,5 +16,4 @@ namespace Razor.UI.Extensions
             return Convert.ToBase64String(encoding.GetBytes(credential));
         }
     }
-
 }

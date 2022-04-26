@@ -33,7 +33,6 @@ namespace Shopping.Aggregator.Controllers
                 var product = await _catalogService.GetCatalog(item.ProductId);
                 item.ProductName = product.Name;
                 item.ParentCategoryCode = product.ParentCategoryCode;
-
                 item.Summary = product.Summary;
                 item.Description = product.Description;
                 item.SmallImageURL = product.SmallImageURL;
@@ -53,8 +52,6 @@ namespace Shopping.Aggregator.Controllers
                 Orders = orders
             };
             return Ok(result);
-
         }
-
     }
 }

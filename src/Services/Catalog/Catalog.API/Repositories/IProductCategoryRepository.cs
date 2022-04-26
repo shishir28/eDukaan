@@ -7,5 +7,4 @@ namespace Catalog.API.Repositories
     {
         Task<IEnumerable<CatalogCategory>> GetProductCategories();
     }
-
 }

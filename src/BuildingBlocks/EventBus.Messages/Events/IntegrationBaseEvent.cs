@@ -15,6 +15,5 @@
             Id = Id;
             CreationDate = creationDate;
         }
-
     }
 }

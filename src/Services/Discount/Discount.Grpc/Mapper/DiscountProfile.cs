@@ -10,6 +10,5 @@ namespace Discount.Grpc.Mapper
         {
             CreateMap<Coupon, CouponModel>().ReverseMap();
         }
-
     }
 }

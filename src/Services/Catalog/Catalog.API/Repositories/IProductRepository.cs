@@ -13,5 +13,4 @@ namespace Catalog.API.Repositories
         Task<bool> Update(CatalogItem product);
         Task<bool> Delete(string id);
     }
-
 }

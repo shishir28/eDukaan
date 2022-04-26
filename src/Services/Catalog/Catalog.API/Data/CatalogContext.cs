@@ -11,7 +11,6 @@ namespace Catalog.API.Data
         public IMongoCollection<CatalogCategory> CatalogCategories { get; }
         public IMongoCollection<CatalogDiscount> CatalogDiscounts { get; }
 
-
         public CatalogContext(IConfiguration config)
         {
             var client = new MongoClient(config.GetValue<string>("DatabaseSettings:ConnectionString"));
@@ -21,6 +20,5 @@ namespace Catalog.API.Data
             CatalogCategories = database.GetCollection<CatalogCategory>(config.GetValue<string>("DatabaseSettings:CategoryCollectionName"));
             CatalogDiscounts = database.GetCollection<CatalogDiscount>(config.GetValue<string>("DatabaseSettings:DiscountCollectionName"));
         }
-
     }
 }

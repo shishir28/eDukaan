@@ -8,7 +8,6 @@ namespace Catalog.API.Data
     public class CatalogContextSeed
     {
         public static void SeedData(IWebHostEnvironment env, IConfiguration config)
-
         {
             var client = new MongoClient(config.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(config.GetValue<string>("DatabaseSettings:DatabaseName"));
@@ -20,7 +19,6 @@ namespace Catalog.API.Data
             var existingCatalogCategories = catalogCategories.Find(p => true).ToList().Any();
 
             var catalogTuple = ParseCatalogData(env.ContentRootPath);
-
 
             var existingItems = catalogItems.Find(p => true).ToList().Any();
 
@@ -41,7 +39,7 @@ namespace Catalog.API.Data
 
             if (!existingCatalogDiscounts)
                 catalogDiscounts.InsertManyAsync(GetPreconfiguredCatalogDiscounts());
-        
+
         }
 
         private static IEnumerable<CatalogDiscount> GetPreconfiguredCatalogDiscounts()
@@ -86,7 +84,5 @@ namespace Catalog.API.Data
             });
             return (categoryList, brandList, catalogItemList);
         }
-
-
     }
 }

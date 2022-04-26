@@ -26,5 +26,4 @@ namespace Ordering.API.EventBusConsumer
             _logger.LogInformation($"BasketCheckoutEvent successfully and New Order Id is {newOrderId}");
         }
     }
-
 }

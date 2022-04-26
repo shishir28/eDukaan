@@ -37,6 +37,5 @@ namespace Ordering.Infrastructure
             dbContext.Database.Migrate();
             OrderContextSeed.SeedAsync(dbContext);
         }
-
     }
 }

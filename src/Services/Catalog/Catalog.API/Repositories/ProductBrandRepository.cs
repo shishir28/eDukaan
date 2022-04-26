@@ -14,6 +14,5 @@ namespace Catalog.API.Repositories
         public async Task<IEnumerable<CatalogBrand>> GetProductBrands() =>
              await _context.CatalogBrands.Find(x => true).ToListAsync();
 
-
     }
 }

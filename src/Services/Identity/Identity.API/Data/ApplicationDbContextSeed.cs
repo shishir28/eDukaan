@@ -6,7 +6,7 @@ namespace Identity.API
     public class ApplicationDbContextSeed
     {
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher = new PasswordHasher<ApplicationUser>();
-       
+
         public async Task SeedAsync(ApplicationDbContext context, IWebHostEnvironment env,
           ILogger<ApplicationDbContextSeed> logger, IOptions<AppSettings> settings, int? retry = 0)
         {
@@ -22,7 +22,7 @@ namespace Identity.API
                 {
                     context.Users.AddRange(GetDefaultUser());
                     await context.SaveChangesAsync();
-                }             
+                }
             }
             catch (Exception ex)
             {
@@ -40,24 +40,24 @@ namespace Identity.API
             var userAlice =
             new ApplicationUser()
             {
-                CardHolderName = "Alice",
+                CardHolderName = "John",
                 CardNumber = "4012888888881881",
                 CardType = 1,
                 City = "Sydney",
                 Country = "AU",
-                Email = "AliceSmith@email.com",
-                Expiration = "12/25",
+                Email = "JohnDoe@email.com",
+                Expiration = "12/26",
                 Id = Guid.NewGuid().ToString(),
-                LastName = "Smith",
-                Name = "Alice",
+                LastName = "Doe",
+                Name = "John",
                 PhoneNumber = "0410000000",
-                UserName = "AliceSmith@email.com",
+                UserName = "JohnDoe@email.com",
                 ZipCode = "1234",
                 State = "NSW",
                 Street = "1000 S King Road",
                 SecurityNumber = "535",
-                NormalizedEmail = "ALICESMITH@EMAIL.COM",
-                NormalizedUserName = "ALICESMITH@EMAIL.COM",
+                NormalizedEmail = "JOHNDOE@EMAIL.COM",
+                NormalizedUserName = "JOHNDOE@EMAIL.COM",
                 SecurityStamp = Guid.NewGuid().ToString("D"),
             };
 
@@ -66,24 +66,24 @@ namespace Identity.API
             var userBob =
          new ApplicationUser()
          {
-             CardHolderName = "Bob",
+             CardHolderName = "Jane",
              CardNumber = "4012888888881882",
              CardType = 1,
              City = "Brisbane",
              Country = "AU",
-             Email = "BobSmith@email.com",
-             Expiration = "12/25",
+             Email = "JaneDoe@email.com",
+             Expiration = "12/26",
              Id = Guid.NewGuid().ToString(),
-             LastName = "Smith",
-             Name = "Bob",
+             LastName = "Doe",
+             Name = "Jane",
              PhoneNumber = "0410000000",
-             UserName = "BobSmith@email.com",
+             UserName = "JaneDoe@email.com",
              ZipCode = "1234",
              State = "NSW",
              Street = "1000 Railwaye Road",
              SecurityNumber = "536",
-             NormalizedEmail = "BOBSMITH@EMAIL.COM",
-             NormalizedUserName = "BOBSMITH@EMAIL.COM",
+             NormalizedEmail = "JANEDOE@EMAIL.COM",
+             NormalizedUserName = "JANEDOE@EMAIL.COM",
              SecurityStamp = Guid.NewGuid().ToString("D"),
          };
 

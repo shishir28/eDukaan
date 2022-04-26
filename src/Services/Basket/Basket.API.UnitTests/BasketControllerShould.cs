@@ -41,17 +41,16 @@ namespace Basket.API.UnitTests
                 });
             IMapper mapper = mappingConfig.CreateMapper();
             _mapper = mapper;
-            this.IntialieBasketController();
+            this.IntializeBasketController();
         }
 
-        private void IntialieBasketController()
+        private void IntializeBasketController()
         {
             this._sut = new BasketController(_mockBasketRepository.Object,
                _mockDiscountGrpcService.Object,
                _mockPublishEndpoint.Object,
                _mapper,
                _mockLogger.Object);
-
         }
 
         [Fact]
@@ -59,7 +58,7 @@ namespace Basket.API.UnitTests
         {
             // Arrange
             _mockBasketRepository.Setup(x => x.GetBasket("testUser")).ReturnsAsync(new ShoppingCart("testUser"));
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.GetBasket("testUser");
@@ -83,7 +82,6 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -91,7 +89,7 @@ namespace Basket.API.UnitTests
 
 
             _mockBasketRepository.Setup(x => x.GetBasket(userName)).ReturnsAsync(validShoppingCart);
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.GetBasket("testUser");
@@ -118,7 +116,6 @@ namespace Basket.API.UnitTests
 
             // Assert
             Assert.Equal(500, objResult.StatusCode.Value);
-
         }
 
         [Fact]
@@ -132,7 +129,6 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -143,7 +139,7 @@ namespace Basket.API.UnitTests
             _mockBasketRepository.Setup(x => x.UpdateBasket(It.IsAny<ShoppingCart>())).ReturnsAsync(validShoppingCart);
             _mockDiscountGrpcService.Setup(x => x.GetDiscount(It.IsAny<string>())).ReturnsAsync(new CouponModel { Amount = 10 });
 
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.UpdateBasket(validShoppingCart);
@@ -155,7 +151,6 @@ namespace Basket.API.UnitTests
             Assert.Equal(200, okResult.StatusCode.Value);
             var shoppingCart = Assert.IsType<ShoppingCart>(okResult.Value);
             Assert.Equal(940m, shoppingCart.TotalPrice);
-
         }
 
         [Fact]
@@ -169,7 +164,6 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -180,14 +174,13 @@ namespace Basket.API.UnitTests
             _mockBasketRepository.Setup(x => x.UpdateBasket(It.IsAny<ShoppingCart>())).ReturnsAsync(validShoppingCart);
             _mockDiscountGrpcService.Setup(x => x.GetDiscount(It.IsAny<string>())).ThrowsAsync(new System.Exception());
 
-            this.IntialieBasketController();
+            this.IntializeBasketController();
             // Act
             var response = await _sut.UpdateBasket(validShoppingCart);
             var objResult = response.Result as ObjectResult;
 
             // Assert
             Assert.Equal(500, objResult.StatusCode.Value);
-
         }
 
         [Fact]
@@ -198,14 +191,13 @@ namespace Basket.API.UnitTests
 
             _mockBasketRepository.Setup(x => x.DeleteBasket(userName)).Returns(Task.CompletedTask);
 
-            this.IntialieBasketController();
+            this.IntializeBasketController();
             // Act
             var response = await _sut.DeleteBasket(userName);
             var okResult = response.Result as OkResult;
 
             // Assert
             Assert.Equal(200, okResult.StatusCode);
-
         }
 
         [Fact]
@@ -214,22 +206,19 @@ namespace Basket.API.UnitTests
             var userName = "testUser";
 
             _mockBasketRepository.Setup(x => x.DeleteBasket(userName)).ThrowsAsync(new System.Exception());
-            this.IntialieBasketController();
+            this.IntializeBasketController();
             // Act
             var response = await _sut.DeleteBasket(userName);
             var objResult = response.Result as ObjectResult;
 
             // Assert
             Assert.Equal(500, objResult.StatusCode.Value);
-
         }
 
         [Fact]
         public async void CheckoutReturnBadResult()
         {
-
             // Arrange
-
             var userName = "testUser";
             var validShoppingCart = new ShoppingCart();
             validShoppingCart.Items = new List<ShoppingCartItem>
@@ -237,7 +226,6 @@ namespace Basket.API.UnitTests
                 new ShoppingCartItem
                 {
                     Quantity = 1,
-                    // Color = "Red",
                     Price = 950.00M,
                     ProductId = "602d2149e773f2a3990b47f5",
                     ProductName = "IPhone X"
@@ -252,9 +240,8 @@ namespace Basket.API.UnitTests
                 TotalPrice = 1000
             };
 
-            //
             _mockBasketRepository.Setup(x => x.GetBasket(userName)).ReturnsAsync((ShoppingCart)null);
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.Checkout(basketCheckout);
@@ -268,7 +255,6 @@ namespace Basket.API.UnitTests
         [Fact]
         public async void CheckoutReturnOkResult()
         {
-
             // Arrange
             var basketCheckout = new BasketCheckout
             {
@@ -288,7 +274,7 @@ namespace Basket.API.UnitTests
             _mockPublishEndpoint.Setup(x => x.Publish(basketCheckoutEvent, default)).Returns(Task.CompletedTask);
             _mockBasketRepository.Setup(x => x.GetBasket(userName)).ReturnsAsync(new ShoppingCart());
             _mockBasketRepository.Setup(x => x.DeleteBasket(userName)).Returns(Task.CompletedTask);
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.Checkout(basketCheckout);
@@ -302,7 +288,6 @@ namespace Basket.API.UnitTests
         [Fact]
         public async void CheckoutReturnInternalServerError()
         {
-
             // Arrange
             var basketCheckout = new BasketCheckout
             {
@@ -322,7 +307,7 @@ namespace Basket.API.UnitTests
             _mockPublishEndpoint.Setup(x => x.Publish(basketCheckoutEvent, default)).Returns(Task.CompletedTask);
             _mockBasketRepository.Setup(x => x.GetBasket(userName)).ReturnsAsync(new ShoppingCart());
             _mockBasketRepository.Setup(x => x.DeleteBasket(userName)).ThrowsAsync(new System.Exception());
-            this.IntialieBasketController();
+            this.IntializeBasketController();
 
             // Act
             var result = await _sut.Checkout(basketCheckout);
@@ -333,5 +318,4 @@ namespace Basket.API.UnitTests
             Assert.Equal(500, objResult.StatusCode.Value);
         }
     }
-
 }

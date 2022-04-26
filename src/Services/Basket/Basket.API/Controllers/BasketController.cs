@@ -137,6 +137,5 @@ namespace Basket.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data in the database");
             }
         }
-
     }
 }

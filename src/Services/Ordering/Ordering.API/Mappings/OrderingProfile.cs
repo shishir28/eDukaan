@@ -10,7 +10,6 @@ namespace Ordering.API.Mappings
         {
             // Add as many of these lines as you need to map your objects
             CreateMap<CheckoutOrderCommand, BasketCheckoutEvent>().ReverseMap();
-
         }
     }
 }

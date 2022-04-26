@@ -14,6 +14,5 @@
         public bool UseVault { get; set; }
         public int PermanentTokenLifetimeDays { get; set; }
         public string IssuerUri { get; set; }
-
     }
 }

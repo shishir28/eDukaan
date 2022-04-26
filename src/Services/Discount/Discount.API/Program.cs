@@ -36,8 +36,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddScoped<IDiscountContext, DiscountContext>();
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
-
+builder.Services.AddHealthChecks();
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

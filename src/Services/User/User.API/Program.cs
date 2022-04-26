@@ -37,8 +37,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
+builder.Services.AddHealthChecks();
 var app = builder.Build();
 
+app.MapHealthChecks("/healthz");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

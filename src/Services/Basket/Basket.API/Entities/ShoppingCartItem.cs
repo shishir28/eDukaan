@@ -8,5 +8,4 @@ namespace Basket.API.Entities
         public string ProductId { get; set; } = String.Empty;
         public string ProductName { get; set; } = String.Empty;
     }
-
 }

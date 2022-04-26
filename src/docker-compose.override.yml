@@ -93,6 +93,7 @@ services:
       - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/edukaan.pfx"
     volumes:
       - ~/.aspnet/https:/https:ro
+    restart: on-failure
     ports:
     - "8000:80"  
     - "8300:443"  
@@ -104,11 +105,13 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
       - "DatabaseSettings:DatabaseName=Catalog"
       - "DatabaseSettings:CollectionName=Products"
     depends_on:
       - catalogdb
+    restart: on-failure
     ports:
       - "8001:80"
 
@@ -116,6 +119,7 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
       - "CacheSettings:ConnectionString=basketdb:6379"
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
       - "EventBusSettings:Host=amqp://rabbitmq:5672"
@@ -126,6 +130,7 @@ services:
     depends_on:
       - basketdb
       - rabbitmq
+    restart: on-failure
     ports:
       - "8002:80"  
   discount.api:
@@ -136,6 +141,7 @@ services:
       - "IdentityUrl=http://identity.api"
     depends_on:
       - discountdb
+    restart: on-failure
     ports:
       - "8003:80"  
   discount.grpc:
@@ -145,6 +151,7 @@ services:
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin123;"
     depends_on:
       - discountdb
+    restart: on-failure
     ports:
       - "8004:80"  
   order.api:
@@ -159,6 +166,7 @@ services:
     depends_on:
       - orderdb
       - rabbitmq
+    restart: on-failure
     ports:
       - "8005:80"
   
